@@ -2,103 +2,490 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Stamina Training Calendar 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#07080f;--card:#131522;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.15);--text:#eef0f8;--muted:#6b7280;--muted2:#9ca3af;--p1:#ff6b47;--p2:#e8ff47;--p3:#47d4ff;--p4:#b47cff;}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;min-height:100vh;}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(255,107,71,0.05) 0%,transparent 50%),radial-gradient(ellipse 60% 60% at 85% 95%,rgba(71,212,255,0.04) 0%,transparent 50%);}
+:root{
+  --bg:#07080f;
+  --card:#0f1020;
+  --card2:#131522;
+  --border:rgba(255,255,255,0.06);
+  --border2:rgba(255,255,255,0.14);
+  --text:#eef0f8;
+  --muted:#6b7280;
+  --muted2:#9ca3af;
+  --p1:#ff6b47;
+  --p2:#e8ff47;
+  --p3:#47d4ff;
+  --p4:#b47cff;
+  --radius:10px;
+}
 
-.app-header{position:sticky;top:0;z-index:100;background:rgba(7,8,15,0.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.app-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2.5px;white-space:nowrap;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Outfit',sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 5%, rgba(255,107,71,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 90% 95%, rgba(71,212,255,0.05) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(180,124,255,0.02) 0%, transparent 60%);
+}
+
+/* ── HEADER ── */
+.app-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(7,8,15,0.95);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:10px 16px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  gap:10px;
+}
+.app-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;
+  letter-spacing:2.5px;
+  white-space:nowrap;
+  line-height:1;
+}
 .app-title span{color:var(--p2);}
-.phase-pills{display:flex;gap:5px;flex-wrap:wrap;}
-.phase-pill{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:3px 9px;border-radius:20px;border:1px solid;cursor:pointer;transition:all 0.18s;white-space:nowrap;}
-.phase-pill:hover,.phase-pill.active{opacity:1;transform:scale(1.05);}
-.phase-pill:not(.active){opacity:0.38;}
+
+.phase-pills{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.phase-pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;
+  padding:4px 8px;
+  border-radius:20px;
+  border:1px solid;
+  cursor:pointer;
+  transition:all 0.2s;
+  white-space:nowrap;
+  user-select:none;
+  letter-spacing:0.3px;
+}
+.phase-pill:hover{opacity:1!important;transform:scale(1.05);}
+.phase-pill.active{opacity:1!important;}
+.phase-pill:not(.active){opacity:0.35;}
 .p1-pill{color:var(--p1);border-color:var(--p1);background:rgba(255,107,71,0.08);}
 .p2-pill{color:var(--p2);border-color:var(--p2);background:rgba(232,255,71,0.06);}
 .p3-pill{color:var(--p3);border-color:var(--p3);background:rgba(71,212,255,0.06);}
 .p4-pill{color:var(--p4);border-color:var(--p4);background:rgba(180,124,255,0.06);}
-.all-pill{color:#fff;border-color:#444;background:rgba(255,255,255,0.04);}
-.header-right{margin-left:auto;display:flex;align-items:center;gap:14px;}
-.progress-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:3px;}
-.progress-bar-outer{width:130px;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;}
-.progress-bar-inner{height:100%;background:linear-gradient(90deg,var(--p1),var(--p2));border-radius:2px;transition:width 0.6s ease;}
-.progress-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);}
-.progress-pct{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:600;color:var(--p2);}
+.all-pill{color:#fff;border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.05);}
 
-.legend-bar{display:flex;gap:8px;flex-wrap:wrap;padding:7px 20px;background:rgba(255,255,255,0.012);border-bottom:1px solid var(--border);position:relative;z-index:1;}
-.legend-item{display:flex;align-items:center;gap:4px;font-size:10.5px;color:var(--muted2);}
-.legend-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;}
+.header-right{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:3px;
+}
+.progress-pct{
+  font-family:'JetBrains Mono',monospace;
+  font-size:16px;
+  font-weight:600;
+  color:var(--p2);
+  line-height:1;
+}
+.progress-bar-outer{
+  width:110px;height:4px;
+  background:rgba(255,255,255,0.08);
+  border-radius:2px;overflow:hidden;
+}
+.progress-bar-inner{
+  height:100%;
+  background:linear-gradient(90deg,var(--p1),var(--p2));
+  border-radius:2px;
+  transition:width 0.7s ease;
+}
+.progress-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:8.5px;
+  color:var(--muted);
+  letter-spacing:0.3px;
+}
 
-.today-banner{position:relative;z-index:1;margin:14px 16px 0;background:rgba(232,255,71,0.05);border:1px solid rgba(232,255,71,0.25);border-radius:10px;padding:9px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:background 0.2s;}
-.today-banner:hover{background:rgba(232,255,71,0.09);}
-.today-banner-pulse{width:8px;height:8px;border-radius:50%;background:var(--p2);flex-shrink:0;animation:pd 1.8s ease-in-out infinite;}
-@keyframes pd{0%,100%{box-shadow:0 0 0 0 rgba(232,255,71,0.55);}60%{box-shadow:0 0 0 7px rgba(232,255,71,0);}}
-.today-banner-label{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--p2);letter-spacing:0.5px;}
-.today-banner-detail{font-size:11px;color:var(--muted2);margin-left:auto;white-space:nowrap;}
+/* ── LEGEND ── */
+.legend-bar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  padding:6px 16px;
+  background:rgba(255,255,255,0.015);
+  border-bottom:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.legend-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:10px;color:var(--muted2);
+  white-space:nowrap;
+}
+.legend-dot{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
 
-.main{position:relative;z-index:1;padding:0 16px 100px;max-width:1100px;margin:0 auto;}
-.month-block{margin-top:32px;}
-.month-header{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding-left:2px;}
-.month-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px;line-height:1;}
-.month-year{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);}
-.month-phase-tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:2px 9px;border-radius:20px;border:1px solid;margin-left:auto;}
+/* ── TODAY BANNER ── */
+.today-banner{
+  position:relative;z-index:1;
+  margin:14px 14px 0;
+  background:rgba(232,255,71,0.04);
+  border:1px solid rgba(232,255,71,0.22);
+  border-radius:var(--radius);
+  padding:10px 14px;
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;
+  transition:background 0.2s;
+}
+.today-banner:hover{background:rgba(232,255,71,0.08);}
+.today-banner-pulse{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--p2);flex-shrink:0;
+  animation:pd 2s ease-in-out infinite;
+}
+@keyframes pd{
+  0%,100%{box-shadow:0 0 0 0 rgba(232,255,71,0.6);}
+  60%{box-shadow:0 0 0 8px rgba(232,255,71,0);}
+}
+.today-banner-label{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--p2);
+  letter-spacing:0.5px;
+  flex:1;min-width:0;
+}
+.today-banner-detail{
+  font-size:10.5px;color:var(--muted2);
+  white-space:nowrap;flex-shrink:0;
+}
 
-/* DOW labels sit directly on the grid — no extra margin */
-.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
-.dow-label{text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;padding:4px 0 3px;background:rgba(255,255,255,0.02);border-radius:4px;}
+/* ── MAIN / CALENDAR ── */
+.main{
+  position:relative;z-index:1;
+  padding:0 14px 100px;
+  max-width:1140px;margin:0 auto;
+}
+.month-block{margin-top:28px;}
+.month-header{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:8px;padding-left:2px;
+}
+.month-name{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:2px;line-height:1;
+}
+.month-year{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);
+}
+.month-phase-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;padding:2px 8px;
+  border-radius:20px;border:1px solid;
+  margin-left:auto;
+}
 
-.day-cell{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:7px 7px 8px;min-height:106px;cursor:pointer;transition:border-color 0.18s,transform 0.18s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:3px;}
-.day-cell:hover{border-color:var(--border2);transform:translateY(-1px);z-index:2;}
-.day-cell.empty{background:transparent;border-color:transparent;cursor:default;pointer-events:none;}
-.day-cell.past{opacity:0.36;}
-.day-cell.rest-day    {border-left:2px solid #6b7280;}
-.day-cell.cardio-day  {border-left:2px solid #34d399;}
-.day-cell.strength-day{border-left:2px solid #fbbf24;}
-.day-cell.kegel-day   {border-left:2px solid #a78bfa;}
-.day-cell.hiit-day    {border-left:2px solid #f87171;}
-.day-cell.recovery-day{border-left:2px solid #38bdf8;}
-.day-cell.full-day    {border-left:2px solid #f472b6;}
+/* ── GRID ── */
+.calendar-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:3px;
+}
+.dow-label{
+  text-align:center;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--muted);
+  letter-spacing:0.8px;
+  padding:4px 0 3px;
+  background:rgba(255,255,255,0.02);
+  border-radius:4px;
+}
 
-.day-cell.today{border:2px solid rgba(232,255,71,0.85)!important;background:rgba(232,255,71,0.05)!important;animation:todayGlow 3s ease-in-out infinite;transform:scale(1.02);z-index:4;}
-@keyframes todayGlow{0%,100%{box-shadow:0 0 0 2px rgba(232,255,71,0.1),0 0 16px rgba(232,255,71,0.07);}50%{box-shadow:0 0 0 4px rgba(232,255,71,0.06),0 0 24px rgba(232,255,71,0.13);}}
+/* ── DAY CELLS ── */
+.day-cell{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:8px;
+  padding:7px 6px 7px;
+  min-height:108px;
+  cursor:pointer;
+  transition:border-color 0.18s,transform 0.18s,box-shadow 0.18s;
+  position:relative;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+}
+.day-cell:hover{
+  border-color:var(--border2);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(0,0,0,0.4);
+  z-index:2;
+}
+.day-cell.empty{
+  background:transparent;
+  border-color:transparent;
+  cursor:default;
+  pointer-events:none;
+  min-height:unset;
+}
+.day-cell.past{opacity:0.32;}
+.day-cell.rest-day    {border-left:3px solid #6b7280;}
+.day-cell.cardio-day  {border-left:3px solid #34d399;}
+.day-cell.strength-day{border-left:3px solid #fbbf24;}
+.day-cell.kegel-day   {border-left:3px solid #a78bfa;}
+.day-cell.hiit-day    {border-left:3px solid #f87171;}
+.day-cell.recovery-day{border-left:3px solid #38bdf8;}
+.day-cell.full-day    {border-left:3px solid #f472b6;}
 
-.day-header{display:flex;align-items:center;justify-content:space-between;min-height:16px;}
-.day-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);line-height:1;}
-.day-num.is-today{font-size:15px;font-weight:700;color:var(--p2);}
-.today-chip{font-family:'JetBrains Mono',monospace;font-size:7.5px;font-weight:700;letter-spacing:0.5px;color:#000;background:var(--p2);padding:2px 5px;border-radius:3px;line-height:1.4;white-space:nowrap;}
-.today-daynum{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(232,255,71,0.55);letter-spacing:0.2px;line-height:1;margin-top:1px;}
+.day-cell.today{
+  border:2px solid rgba(232,255,71,0.8)!important;
+  background:rgba(232,255,71,0.04)!important;
+  animation:todayGlow 3s ease-in-out infinite;
+  transform:scale(1.02);
+  z-index:4;
+}
+@keyframes todayGlow{
+  0%,100%{box-shadow:0 0 0 2px rgba(232,255,71,0.08),0 0 18px rgba(232,255,71,0.06);}
+  50%{box-shadow:0 0 0 4px rgba(232,255,71,0.04),0 0 28px rgba(232,255,71,0.12);}
+}
 
-.day-badge{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-family:'JetBrains Mono',monospace;font-weight:500;padding:2px 5px;border-radius:3px;letter-spacing:0.3px;text-transform:uppercase;align-self:flex-start;white-space:nowrap;}
-.day-tasks{display:flex;flex-direction:column;gap:2px;flex:1;}
-.task-item{font-size:10px;color:#b0b4c0;line-height:1.35;display:flex;gap:4px;align-items:flex-start;}
-.task-dot{width:3px;height:3px;border-radius:50%;margin-top:4px;flex-shrink:0;background:currentColor;opacity:0.4;}
-.day-tip{font-size:9px;color:var(--muted);font-style:italic;line-height:1.4;border-top:1px solid rgba(255,255,255,0.05);padding-top:3px;margin-top:1px;}
+.day-header{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  min-height:16px;
+}
+.day-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--muted);line-height:1;
+}
+.day-num.is-today{
+  font-size:14px;font-weight:700;color:var(--p2);
+}
+.today-chip{
+  font-family:'JetBrains Mono',monospace;
+  font-size:7px;font-weight:700;letter-spacing:0.5px;
+  color:#000;background:var(--p2);
+  padding:2px 5px;border-radius:3px;
+  line-height:1.4;white-space:nowrap;
+}
+.today-daynum{
+  font-family:'JetBrains Mono',monospace;
+  font-size:7.5px;color:rgba(232,255,71,0.5);
+  letter-spacing:0.2px;line-height:1;margin-top:1px;
+}
 
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.78);z-index:200;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);}
+.day-badge{
+  display:inline-flex;align-items:center;gap:3px;
+  font-size:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-weight:500;
+  padding:2px 5px;border-radius:3px;
+  letter-spacing:0.3px;text-transform:uppercase;
+  align-self:flex-start;white-space:nowrap;
+}
+.day-tasks{
+  display:flex;flex-direction:column;gap:2px;flex:1;
+}
+.task-item{
+  font-size:10px;color:#9ca3af;
+  line-height:1.35;
+  display:flex;gap:4px;align-items:flex-start;
+}
+.task-dot{
+  width:3px;height:3px;border-radius:50%;
+  margin-top:4.5px;flex-shrink:0;
+  background:currentColor;opacity:0.35;
+}
+.day-tip{
+  font-size:8.5px;color:var(--muted);font-style:italic;
+  line-height:1.4;
+  border-top:1px solid rgba(255,255,255,0.05);
+  padding-top:3px;margin-top:2px;
+}
+
+/* ── MODAL ── */
+.modal-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.82);
+  z-index:300;
+  align-items:center;justify-content:center;
+  padding:16px;
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
 .modal-overlay.open{display:flex;}
-.modal{background:#11121e;border:1px solid var(--border2);border-radius:16px;width:100%;max-width:460px;padding:24px;position:relative;animation:popIn 0.18s ease;}
-@keyframes popIn{from{transform:scale(0.93);opacity:0;}to{transform:scale(1);opacity:1;}}
-.modal-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.06);border:none;color:var(--muted2);width:26px;height:26px;border-radius:6px;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.modal-meta{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);margin-bottom:5px;letter-spacing:0.6px;}
-.modal-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;margin-bottom:4px;}
-.modal-type{display:inline-flex;align-items:center;gap:4px;font-family:'JetBrains Mono',monospace;font-size:9.5px;padding:3px 10px;border-radius:4px;margin-bottom:16px;}
-.modal-stripe{height:2px;border-radius:2px;margin-bottom:16px;opacity:0.5;}
-.modal-sec{font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;margin-top:14px;}
-.modal-tasks{display:flex;flex-direction:column;gap:8px;}
-.modal-task{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.55;}
-.modal-task-ic{font-size:15px;flex-shrink:0;width:20px;text-align:center;}
-.modal-tip{background:rgba(255,255,255,0.025);border:1px solid var(--border);border-radius:8px;padding:11px 13px;margin-top:14px;font-size:12px;color:var(--muted2);line-height:1.65;}
-.modal-tip strong{display:block;color:var(--text);margin-bottom:3px;font-size:9px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;text-transform:uppercase;}
+.modal{
+  background:#10111e;
+  border:1px solid var(--border2);
+  border-radius:16px;
+  width:100%;max-width:480px;
+  padding:22px;
+  position:relative;
+  animation:popIn 0.18s ease;
+  max-height:90vh;
+  overflow-y:auto;
+}
+@keyframes popIn{
+  from{transform:scale(0.92);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+.modal-close{
+  position:sticky;top:0;float:right;
+  background:rgba(255,255,255,0.07);
+  border:none;color:var(--muted2);
+  width:28px;height:28px;border-radius:7px;
+  cursor:pointer;font-size:14px;
+  display:flex;align-items:center;justify-content:center;
+  z-index:5;
+}
+.modal-close:hover{background:rgba(255,255,255,0.12);}
+.modal-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;color:var(--muted);
+  margin-bottom:4px;letter-spacing:0.5px;
+}
+.modal-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px;letter-spacing:1px;margin-bottom:4px;
+}
+.modal-type{
+  display:inline-flex;align-items:center;gap:4px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;padding:3px 10px;border-radius:4px;
+  margin-bottom:14px;
+}
+.modal-stripe{height:2px;border-radius:2px;margin-bottom:16px;opacity:0.45;}
+.modal-sec{
+  font-size:9.5px;
+  font-family:'JetBrains Mono',monospace;
+  color:var(--muted);letter-spacing:2px;
+  text-transform:uppercase;
+  margin-bottom:10px;margin-top:14px;
+}
+.modal-tasks{display:flex;flex-direction:column;gap:10px;}
+.modal-task{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;line-height:1.6;
+  padding:9px 11px;
+  background:rgba(255,255,255,0.025);
+  border:1px solid var(--border);
+  border-radius:8px;
+}
+.modal-task-ic{font-size:16px;flex-shrink:0;width:22px;text-align:center;margin-top:1px;}
+.modal-task-text{color:#c5c9d6;flex:1;}
+.modal-tip{
+  background:rgba(255,255,255,0.02);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:12px 14px;margin-top:14px;
+  font-size:12.5px;color:var(--muted2);
+  line-height:1.7;
+}
+.modal-tip strong{
+  display:block;color:var(--text);
+  margin-bottom:4px;
+  font-size:9px;
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:1.5px;text-transform:uppercase;
+}
 
-.fab{position:fixed;bottom:24px;right:20px;background:var(--p2);color:#000;border:none;padding:9px 16px;border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;cursor:pointer;letter-spacing:1px;z-index:50;box-shadow:0 4px 16px rgba(232,255,71,0.28);transition:transform 0.18s;}
-.fab:hover{transform:scale(1.06);}
+/* ── FAB ── */
+.fab{
+  position:fixed;bottom:20px;right:16px;
+  background:var(--p2);color:#000;border:none;
+  padding:10px 16px;border-radius:9px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;
+  cursor:pointer;letter-spacing:1px;
+  z-index:50;
+  box-shadow:0 4px 20px rgba(232,255,71,0.32);
+  transition:transform 0.18s,box-shadow 0.18s;
+  white-space:nowrap;
+}
+.fab:hover{transform:scale(1.06);box-shadow:0 6px 28px rgba(232,255,71,0.42);}
+.fab:active{transform:scale(0.97);}
 
-@media(max-width:640px){.day-cell{min-height:68px;padding:5px 5px 6px;}.task-item{font-size:9px;}.day-tip{display:none;}.day-badge{font-size:7.5px;}}
+/* ── MOBILE ── */
+@media(max-width:640px){
+  .app-header{
+    grid-template-columns:auto auto;
+    grid-template-rows:auto auto;
+    gap:8px;
+  }
+  .app-title{font-size:18px;}
+  .phase-pills{
+    grid-column:1/-1;
+    justify-content:flex-start;
+    gap:3px;
+  }
+  .phase-pill{font-size:8px;padding:3px 7px;}
+  .header-right{
+    grid-row:1;
+    grid-column:2;
+    align-items:flex-end;
+  }
+  .progress-pct{font-size:14px;}
+  .progress-bar-outer{width:90px;}
+
+  .today-banner{flex-wrap:wrap;gap:7px;}
+  .today-banner-detail{font-size:9.5px;}
+
+  .dow-label{font-size:8px;letter-spacing:0.3px;padding:3px 0 2px;}
+
+  .day-cell{
+    min-height:72px;
+    padding:5px 4px 5px;
+    gap:2px;
+  }
+  .day-num{font-size:10px;}
+  .day-num.is-today{font-size:12px;}
+  .day-badge{font-size:7px;padding:2px 4px;}
+  .task-item{font-size:8.5px;}
+  .day-tip{display:none;}
+  .today-chip{font-size:6.5px;padding:1px 4px;}
+
+  .modal{padding:16px;}
+  .modal-title{font-size:24px;}
+  .modal-task{font-size:12px;padding:8px 10px;}
+
+  .legend-bar{gap:7px;}
+  .legend-item{font-size:9px;}
+  .legend-dot{width:7px;height:7px;}
+
+  .month-name{font-size:24px;}
+  .calendar-grid{gap:2px;}
+  .main{padding:0 10px 90px;}
+}
+
+@media(max-width:380px){
+  .phase-pill{font-size:7.5px;padding:3px 6px;}
+  .day-cell{min-height:62px;}
+  .day-badge{display:none;}
+  .dow-label{font-size:7.5px;}
+}
+
+@media(min-width:641px) and (max-width:900px){
+  .app-header{
+    grid-template-columns:auto 1fr auto;
+  }
+  .phase-pills{flex-wrap:nowrap;overflow-x:auto;}
+}
 </style>
 </head>
 <body>
@@ -114,10 +501,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
   </div>
   <div class="header-right">
     <div class="progress-pct" id="progressPct">0%</div>
-    <div class="progress-wrap">
-      <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
-      <div class="progress-label" id="progressLabel">Day 1 of 255</div>
-    </div>
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBar" style="width:0%"></div></div>
+    <div class="progress-label" id="progressLabel">Loading...</div>
   </div>
 </header>
 
@@ -140,280 +525,716 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;bac
     <div class="modal-title" id="mTitle"></div>
     <div id="mBadge"></div>
     <div class="modal-stripe" id="mStripe"></div>
-    <div class="modal-sec">Today's tasks</div>
+    <div class="modal-sec">Today's Training Tasks</div>
     <div class="modal-tasks" id="mTasks"></div>
     <div class="modal-tip" id="mTip"></div>
   </div>
 </div>
 
-<button class="fab" onclick="scrollToToday()">→ TODAY</button>
+<button class="fab" onclick="scrollToToday()">📍 TODAY</button>
 
 <script>
-const TODAY = new Date(2026, 3, 21);
-const START = new Date(2026, 3, 20);
+// ── DYNAMIC DATES: always use real current date ──
+const TODAY = new Date();
+TODAY.setHours(0,0,0,0);
+const START = new Date(2026,3,20); // April 20, 2026
+START.setHours(0,0,0,0);
 
+// ── WORKOUT TYPES ──
 const T = {
-  REST:     {label:'Rest Day',       icon:'😴',color:'#6b7280',bg:'rgba(107,114,128,0.12)',cls:'rest-day'},
-  CARDIO:   {label:'Cardio Run',     icon:'🏃',color:'#34d399',bg:'rgba(52,211,153,0.12)', cls:'cardio-day'},
-  STRENGTH: {label:'Strength',       icon:'💪',color:'#fbbf24',bg:'rgba(251,191,36,0.12)', cls:'strength-day'},
-  KEGEL:    {label:'Kegel Focus',    icon:'🧘',color:'#a78bfa',bg:'rgba(167,139,250,0.12)',cls:'kegel-day'},
-  HIIT:     {label:'HIIT',           icon:'⚡',color:'#f87171',bg:'rgba(248,113,113,0.12)',cls:'hiit-day'},
-  RECOVERY: {label:'Active Recovery',icon:'💧',color:'#38bdf8',bg:'rgba(56,189,248,0.12)', cls:'recovery-day'},
-  FULL:     {label:'Full Body',      icon:'🔥',color:'#f472b6',bg:'rgba(244,114,182,0.12)',cls:'full-day'},
+  REST:     {label:'Rest Day',        icon:'😴', color:'#6b7280', bg:'rgba(107,114,128,0.12)', cls:'rest-day'},
+  CARDIO:   {label:'Cardio Run',      icon:'🏃', color:'#34d399', bg:'rgba(52,211,153,0.12)',  cls:'cardio-day'},
+  STRENGTH: {label:'Strength',        icon:'💪', color:'#fbbf24', bg:'rgba(251,191,36,0.12)',  cls:'strength-day'},
+  KEGEL:    {label:'Kegel Focus',     icon:'🧘', color:'#a78bfa', bg:'rgba(167,139,250,0.12)', cls:'kegel-day'},
+  HIIT:     {label:'HIIT',            icon:'⚡', color:'#f87171', bg:'rgba(248,113,113,0.12)', cls:'hiit-day'},
+  RECOVERY: {label:'Active Recovery', icon:'💧', color:'#38bdf8', bg:'rgba(56,189,248,0.12)',  cls:'recovery-day'},
+  FULL:     {label:'Full Body',       icon:'🔥', color:'#f472b6', bg:'rgba(244,114,182,0.12)', cls:'full-day'},
 };
 
+// ── WEEKLY PLANS ──
+// Each day: [type, short[], detail[], tip]
+// detail[] = full modal task list with clear instructions
 function wp(w) {
   if (w===1) return [
-    [T.CARDIO,   ['Light jog 20 min','Kegel 5s×10×3','Stretch 10 min'],       ['🏃 Light jog 20 min at easy pace','🧘 Kegel 5s×10×3','🙆 Stretch 10 min','💧 2.5L water'],        'Day 1 — build habits, not records. Consistency beats intensity.'],
-    [T.STRENGTH, ['Plank 3×20s','Squats 3×10','Push-ups 3×10','Hip thrusts 3×10'], ['🏋️ Plank 3×20s','🦵 Squats 3×10','💪 Push-ups 3×10','🍑 Hip thrusts 3×10','🧘 Kegel 5s×10×3'], 'Slow squats build more muscle than fast sloppy ones.'],
-    [T.CARDIO,   ['Jog 20 min','Kegel 5s×12×3','Cool-down'],                  ['🏃 Jog 20 min','🧘 Kegel 5s×12×3','🚶 5 min cool-down','🥗 Protein dinner'],                     '3× cardio per week is the minimum for real cardiovascular gains.'],
-    [T.KEGEL,    ['Kegel 5s×15×4','Breathing 10 min','Hip stretch'],          ['🧘 Kegel 5s×15×4','🌬️ Diaphragmatic breathing 10 min','🦵 Hip flexor stretch 2 min each side'], 'Kegel muscles directly control stamina and recovery between rounds.'],
-    [T.FULL,     ['Jog 20 min','Squats 3×12','Plank 3×25s','Push-ups 3×12'],  ['🏃 Jog 20 min','🦵 Squats 3×12','🏋️ Plank 3×25s','💪 Push-ups 3×12','🍑 Glute bridges 3×12'],  'Friday full-body primes you for the weekend. Eat well tonight.'],
-    [T.CARDIO,   ['Long walk 30–40 min','Morning kegel','Stretch'],            ['🚶 Long walk 30–40 min','🧘 Kegel 5s×15×3','🙆 Stretch 15 min','🥑 Nutritious eating'],          'A park walk counts as quality cardio. Movement doesn\'t have to be a gym.'],
-    [T.REST,     ['Rest & recover','Sleep 8+ hrs','Meal prep'],                ['😴 8–9 hrs quality sleep','🥗 Meal prep proteins','🛁 Epsom salt bath','📓 Journal week 1'],       'Rest is when your body builds strength. Never skip Sunday recovery.'],
+    [T.CARDIO, ['Light jog 20 min at easy pace','Kegel holds 5s × 10 reps × 3 sets','Full-body stretch 10 min','Drink 2.5L water today'],
+      ['🏃 Light jog 20 min — keep pace easy, you should be able to hold a conversation. No pressure to go fast today.',
+       '🧘 Kegel holds: squeeze the pelvic floor muscles as if stopping urine flow. Hold 5 seconds, release 5 seconds. Do 10 reps × 3 sets with 60s rest between sets.',
+       '🙆 Stretch full body after jogging: hip flexors, hamstrings, quads, calves — 30s each.',
+       '💧 Drink 2.5 litres of water spread across the day — not all at once.'],
+      'Day 1 — build the habit first, intensity comes later. Consistency over the next 36 weeks beats any single intense session.'],
+
+    [T.STRENGTH, ['Plank 3 × 20s, rest 30s between','Bodyweight Squats 3 × 10 reps, slow and controlled','Push-ups 3 × 10 reps, full range','Hip Thrusts 3 × 10 reps with 2s squeeze at top','Kegel holds 5s × 10 × 3'],
+      ['🏋️ Plank: hold body straight from head to heels, core tight, no sagging. 3 sets × 20 seconds. Rest 30 seconds between sets.',
+       '🦵 Squats: feet shoulder-width, toes slightly out. Lower until thighs are parallel, drive back up. 3 sets × 10 reps slow and controlled.',
+       '💪 Push-ups: hands slightly wider than shoulders, lower chest to 1 inch above floor, push all the way up. Modify on knees if needed. 3 × 10.',
+       '🍑 Hip Thrusts: lie on your back, feet flat, knees bent. Drive hips up squeezing glutes hard at top for 2 seconds. 3 × 10 reps.',
+       '🧘 Finish with Kegel holds 5s × 10 reps × 3 sets as a cool-down.'],
+      'Slow, controlled squats recruit far more muscle than fast sloppy reps. Take 3 seconds going down, 2 seconds coming back up.'],
+
+    [T.CARDIO, ['Jog 20 min at comfortable pace','Kegel 5s × 12 reps × 3 sets','5 min brisk walking cool-down','High-protein dinner tonight'],
+      ['🏃 Jog 20 min — same easy conversational pace as Day 1. Focus on breathing through your nose for the first 10 minutes.',
+       '🧘 Kegel: 5s hold, 5s release × 12 reps × 3 sets. Try doing this standing up today for added challenge.',
+       '🚶 After jogging: 5 minutes slow walking to bring heart rate down before stretching calves and hamstrings.',
+       '🥩 Aim for at least 30g of protein at dinner — eggs, chicken, fish, or beans all count.'],
+      '3 cardio sessions per week is the minimum threshold for real cardiovascular improvement. Hit all 3 every week.'],
+
+    [T.KEGEL, ['Kegel 5s × 15 reps × 4 sets — morning and evening','Diaphragmatic breathing 10 min','Hip flexor stretch 2 min each side'],
+      ['🧘 Morning session (after waking): Kegel 5s hold × 15 reps × 2 sets. Lie on your back for best isolation.',
+       '🌬️ Diaphragmatic breathing: sit or lie flat. Breathe IN for 4s expanding your belly (not chest), hold 1s, breathe OUT slowly 6s. Do 10 min. This strengthens the diaphragm and reduces stress hormones.',
+       '🦵 Hip flexor stretch: kneel on one knee, push hips forward until you feel a stretch in the front of the hip. Hold 2 min each side. Tight hips limit stamina and performance.',
+       '🧘 Evening session: Kegel 5s hold × 15 reps × 2 sets again before bed.'],
+      'Kegel muscles are the direct control muscles for stamina and recovery speed. Daily training here gives faster results than people expect.'],
+
+    [T.FULL, ['Jog 20 min to warm up','Squats 3 × 12 reps','Plank 3 × 25s','Push-ups 3 × 12 reps','Glute Bridges 3 × 12 reps'],
+      ['🏃 Start with a 20-min jog as your warm-up — easy pace, just get the blood moving.',
+       '🦵 Squats 3 × 12: push depth this time, aim for below parallel if your flexibility allows.',
+       '🏋️ Plank 3 × 25s: squeeze glutes and core the entire time. Breathe steadily, do not hold your breath.',
+       '💪 Push-ups 3 × 12: if standard push-ups are easy, try slowing the lowering phase to 3 seconds each rep.',
+       '🍑 Glute bridges 3 × 12: similar to hip thrusts but lying flat with no elevation. Squeeze hard at the top for 2s.',
+       '🧘 Cool down with 5 min of light stretching and 10 kegel reps.'],
+      'Friday full-body sessions build the foundation for the weekend. Eat a solid protein meal within 45 minutes after this session.'],
+
+    [T.CARDIO, ['Long walk 35 min at brisk pace','Morning kegel 5s × 15 × 3','Full body stretch 15 min'],
+      ['🚶 Walk 35 min at a brisk pace — arms swinging, purposeful stride. This counts as real cardio and gives your joints a break from running.',
+       '🧘 Morning kegel: before breakfast, do 5s hold × 15 reps × 3 sets while still lying in bed. Make this a daily ritual.',
+       '🙆 Evening stretch routine: hip flexors 90s each, hamstrings 60s each, glutes (pigeon pose) 90s each, chest 60s. Hold each stretch without bouncing.',
+       '🥑 Eat a nutritious dinner tonight — include healthy fats like avocado, nuts, or olive oil for hormone support.'],
+      'A brisk park walk is legitimate cardiovascular training. Movement does not have to happen in a gym to count.'],
+
+    [T.REST, ['Full rest — no structured exercise','8–9 hours quality sleep tonight','Meal prep for next week','Journal progress from Week 1'],
+      ['😴 Full rest: do not train today. Your muscles repair and grow during recovery, not during the workout itself.',
+       '🥗 Meal prep: cook a batch of protein (chicken, eggs, fish) and carbs (rice, sweet potato) so you eat well all week without thinking.',
+       '🛁 Optional: take an Epsom salt bath or do a 10-min foam roll to speed up muscle recovery.',
+       '📓 Journal: write down how you feel after Week 1. Are mornings easier? Is breathing smoother? Note any changes.'],
+      'Rest is when your body builds strength. Skipping Sunday recovery is the most common reason people plateau early.'],
   ];
+
   if (w===2) return [
-    [T.CARDIO,   ['Jog 25 min','Kegel 7s×10×3','Stretch'],                    ['🏃 Jog 25 min','🧘 Kegel 7s×10×3','🙆 Stretch 10 min','💧 2.5L water'],                         'Add 5 min per week. Gradual progression prevents injury and burnout.'],
-    [T.STRENGTH, ['Plank 3×30s','Squats 3×12','Hip thrusts 3×12','Push-ups 3×12'], ['🏋️ Plank 3×30s','🦵 Squats 3×12','🍑 Hip thrusts 3×12','💪 Push-ups 3×12','🧘 Kegel 7s×10×3'], 'Hip thrusts directly strengthen muscles used most during intimacy.'],
-    [T.CARDIO,   ['Jog 25 min','Kegel 7s×12×3','Cool-down'],                  ['🏃 Jog 25 min','🧘 Kegel 7s×12×3','🚶 5 min cool-down','🥩 Protein within 30 min'],              'Post-workout protein window: eat within 30 minutes.'],
-    [T.KEGEL,    ['Kegel 7s×15×4','Box breathing','Core stretch'],            ['🧘 Kegel 7s×15×4','🌬️ Box breathing: inhale 4s, hold 4s, exhale 4s × 10','🦵 Cat-cow, cobra'], 'Box breathing reduces cortisol — the stress hormone that kills stamina.'],
-    [T.FULL,     ['Jog 25 min','Circuit ×3','Hip thrusts 3×15'],              ['🏃 Jog 25 min','⚡ Circuit ×3: 12 squats + 12 push-ups + 30s plank','🍑 Hip thrusts 3×15'],    'Circuit training boosts cardiovascular efficiency.'],
-    [T.CARDIO,   ['Swim / bike 30 min','Morning kegel','Stretch'],            ['🏊 Swim 30 min OR cycle OR walk','🧘 Kegel 7s×15×3','🙆 Stretch 15 min evening'],               'Variety keeps motivation alive. Your heart doesn\'t care if you swim or run.'],
-    [T.REST,     ['Full rest','8+ hrs sleep','Hydrate'],                      ['😴 8–9 hrs sleep','💧 3L water','🛁 Bath or massage','📊 Week 2: are habits sticking?'],           'More energy? Better sleep? Early signs your body is adapting.'],
+    [T.CARDIO, ['Jog 25 min at easy-to-moderate pace','Kegel 7s × 10 reps × 3 sets','Stretch 10 min after run'],
+      ['🏃 Jog 25 min — 5 more minutes than last week. Aim to keep a steady breathing rhythm throughout. If you need to slow down to maintain nasal breathing, do it.',
+       '🧘 Kegel 7s hold × 10 reps × 3 sets — hold for 7 seconds, release fully for 5 seconds. Feel the full release as much as the squeeze.',
+       '🙆 Post-run stretch: hamstrings, quads, calves, hip flexors. Hold 45s each. Never skip this.',
+       '💧 2.5L water minimum today.'],
+      'Add 5 minutes to your run each week. This gradual progression prevents overuse injuries and keeps adaptation happening steadily.'],
+
+    [T.STRENGTH, ['Plank 3 × 30s','Squats 3 × 12 reps','Hip Thrusts 3 × 12 reps with 2s pause','Push-ups 3 × 12 reps','Kegel 7s × 10 × 3'],
+      ['🏋️ Plank 3 × 30s: 10 more seconds than Week 1. Focus on not letting your lower back sag.',
+       '🦵 Squats 3 × 12: add 2 reps per set from last week. Keep your chest tall and knees tracking over toes.',
+       '🍑 Hip thrusts 3 × 12 with 2s pause: drive hips up, pause and squeeze hard at the top for 2 full seconds before lowering slowly. This pause doubles the muscle activation.',
+       '💪 Push-ups 3 × 12: if you can do all 36 reps cleanly, add a 2-second pause at the bottom next week.',
+       '🧘 Kegel 7s × 10 × 3 to close the session.'],
+      'Hip thrusts with a pause directly train the muscles most engaged during intimate activity. This is one of your most important exercises.'],
+
+    [T.CARDIO, ['Jog 25 min','Kegel 7s × 12 reps × 3 sets','Eat protein within 30 min after run'],
+      ['🏃 Jog 25 min — you should feel slightly more comfortable at this distance than Week 1.',
+       '🧘 Kegel 7s × 12 × 3: two more reps per set. Do these standing in the shower or while waiting — no one can tell.',
+       '🥩 Protein within 30 minutes: have a shake, eggs, or Greek yogurt immediately after your run. This 30-minute window matters for muscle repair.',
+       '🌬️ Practice breathing in through your nose only during the last 5 minutes of the run.'],
+      'The post-workout protein window is real. Eat within 30 minutes of finishing a strength-adjacent session for best recovery.'],
+
+    [T.KEGEL, ['Kegel 7s × 15 reps × 4 sets — split morning and evening','Box breathing 10 min','Core stretch routine'],
+      ['🧘 Morning kegel (2 sets): 7s hold × 15 reps × 2 sets lying in bed before getting up.',
+       '🌬️ Box breathing: inhale 4 seconds, hold breath 4 seconds, exhale 4 seconds, hold empty 4 seconds. Repeat for 10 minutes. This is a proven cortisol reducer — and cortisol kills stamina.',
+       '🦵 Core stretch routine: cat-cow 10 reps, cobra pose hold 30s × 3, child\'s pose 60s, seated forward fold 60s.',
+       '🧘 Evening kegel (2 sets): 7s hold × 15 reps × 2 sets before bed.'],
+      'Box breathing activates the parasympathetic nervous system — your body\'s rest-and-recover mode. This directly improves how fast you recover between intense efforts.'],
+
+    [T.FULL, ['Jog 25 min','Circuit × 3 rounds: 12 squats + 12 push-ups + 30s plank','Hip Thrusts 3 × 15'],
+      ['🏃 Jog 25 min warm-up, moderate pace.',
+       '⚡ Circuit × 3 rounds: perform all 3 exercises back to back with no rest. Rest 90 seconds between rounds.\n  → 12 squats (slow, controlled)\n  → 12 push-ups (full range)\n  → 30s plank (core tight)',
+       '🍑 Hip Thrusts 3 × 15: after the circuit, finish with 3 sets of 15 hip thrusts. Add a 2s pause at the top on every rep.',
+       '🧘 5 min kegel cool-down: 7s × 10 reps.'],
+      'Circuit training improves cardiovascular efficiency while building strength simultaneously — the best combination for your goals.'],
+
+    [T.CARDIO, ['Swim 30 min OR cycle 30 min OR brisk walk 35 min','Morning kegel 7s × 15 × 3','Stretch 15 min in evening'],
+      ['🏊 Choose your activity today: swimming, cycling, or walking. All three are equally valid cardio choices — pick the one that sounds most enjoyable.',
+       '🧘 Morning kegel before breakfast: 7s hold × 15 reps × 3 sets.',
+       '🙆 Evening stretch 15 min: focus on hips, inner thighs, and lower back today.',
+       '🥑 Have a rest-day level dinner — vegetables, lean protein, healthy fats, no alcohol.'],
+      'Variety in cardio type prevents both boredom and overuse injuries. Your heart muscle doesn\'t know or care if you\'re swimming or running.'],
+
+    [T.REST, ['Full rest — zero training','8–9 hours sleep','3L water today','Review habits: is anything slipping?'],
+      ['😴 Full rest: do not train. Wear comfortable clothing, avoid heavy meals late at night.',
+       '💧 Drink 3 litres of water today, more than usual to help flush out training byproducts.',
+       '🛁 Hot bath or gentle self-massage if muscles are sore.',
+       '📊 Honest check: are you training all 6 days? Are you sleeping enough? Fix what\'s slipping NOW before bad habits lock in.'],
+      'Noticing more energy in the mornings? Breathing easier at the top of stairs? These early signs confirm your body is already adapting.'],
   ];
+
   if (w===3) return [
-    [T.CARDIO,   ['Jog 30 min','Kegel 10s×10×3','Stretch'],                  ['🏃 Jog 30 min — a real milestone!','🧘 Kegel 10s×10×3','🙆 Stretch 10 min','💧 2.5L water'],     '30-min runs are where real cardiovascular benefits begin.'],
-    [T.STRENGTH, ['Plank 3×40s','Squats 4×12','Hip thrusts 4×12','Push-ups 4×12'], ['🏋️ Plank 3×40s','🦵 Squats 4×12','🍑 Hip thrusts 4×12','💪 Push-ups 4×12','🧘 Kegel 10s×10×3'], 'A 4th set increases volume significantly — real adaptation begins here.'],
-    [T.HIIT,     ['HIIT 20 min: 30s on/30s off','Kegel 10s×12×3'],           ['⚡ HIIT 20 min: sprint 30s, walk 30s, repeat','🧘 Kegel 10s×12×3','🌬️ 5 min deep breathing'],  'HIIT trains your heart to recover quickly — exactly what you need between rounds.'],
-    [T.KEGEL,    ['Kegel 10s×15×4','Reverse kegel intro','Hip stretch'],     ['🧘 Kegel 10s×15×3 morning','🔄 Reverse kegel: bear down 5s × 10 reps','🦵 Hip stretch 2 min'],  'Reverse kegels teach release and control — as important as squeezing.'],
-    [T.FULL,     ['Jog 30 min','Circuit ×3','Core 10 min'],                  ['🏃 Jog 30 min','⚡ Circuit ×3: 15 squats + 15 push-ups + 12 hip thrusts + 45s plank','🔥 Core finisher'], 'Friday full body is your most important session each week.'],
-    [T.CARDIO,   ['Walk/bike 35 min','Kegel','Light yoga'],                  ['🚴 Cycle or 35 min walk','🧘 Kegel 10s×15×3','🧘 Yoga 20 min'],                                 'Consistent weekend activity separates people who achieve goals from those who don\'t.'],
-    [T.REST,     ['Full rest','8+ hrs sleep','Reflect'],                     ['😴 8–9 hrs sleep','🌬️ Morning breathing 5 min','🥗 Meal prep','📈 Notice energy improvements?'],  'Week 3 done. You should feel a difference in daily energy now.'],
+    [T.CARDIO, ['Jog 30 min at steady pace','Kegel 10s × 10 reps × 3 sets','Stretch 10 min'],
+      ['🏃 30-minute jog — this is a real milestone. Most people give up before reaching this. Keep pace conversational.',
+       '🧘 Kegel 10s hold × 10 × 3: the hold time doubles from Week 1. Focus on full release between reps.',
+       '🙆 Post-run stretch: quads, hamstrings, glutes, calves. Hold each 45–60 seconds.',
+       '💧 2.5L water. If you sweat heavily, add a pinch of salt to a glass of water for electrolytes.'],
+      '30-minute continuous runs are the threshold where real cardiovascular adaptation begins. You\'ve reached it in just 3 weeks.'],
+
+    [T.STRENGTH, ['Plank 3 × 40s','Squats 4 × 12 reps','Hip Thrusts 4 × 12 with 2s pause','Push-ups 4 × 12','Kegel 10s × 10 × 3'],
+      ['🏋️ Plank 3 × 40s: 10 more seconds than last week. If 40s feels easy, focus on making every second perfect — squeeze glutes and core maximally.',
+       '🦵 Squats 4 × 12: adding a 4th set increases total volume significantly. This is where real strength adaptations happen.',
+       '🍑 Hip thrusts 4 × 12 with 2s hold at top: four sets now. You should feel the glutes burning by the 4th set.',
+       '💪 Push-ups 4 × 12: if you can complete all sets cleanly, progress to archer push-ups next week.',
+       '🧘 Kegel 10s × 10 × 3 to finish.'],
+      'A 4th set increases training volume by 33%. This extra set, done consistently, creates the strength gains visible in the mirror.'],
+
+    [T.HIIT, ['HIIT 20 min: sprint 30s / walk 30s, repeat 20 times','Kegel 10s × 12 × 3','5 min deep breathing cool-down'],
+      ['⚡ HIIT protocol: warm up 3 min easy jog. Then alternate: sprint hard for 30 seconds (75–85% max effort), walk slowly for 30 seconds. Repeat 20 rounds. Cool down 3 min walk.',
+       '📊 Total session time: ~26 min. You don\'t need to run outdoors — stair climbing, cycling, or jump rope works too.',
+       '🧘 Kegel 10s × 12 × 3 after HIIT. Your heart rate will be elevated — the contrast trains your body to perform under fatigue.',
+       '🌬️ Finish with 5 min of slow, deep diaphragmatic breathing to bring heart rate back to normal.'],
+      'HIIT trains your heart\'s recovery speed — exactly the cardiovascular skill needed to recover between rounds of intense activity.'],
+
+    [T.KEGEL, ['Kegel 10s × 15 reps × 4 sets — split AM and PM','Reverse kegel introduction 5s × 10','Hip flexibility routine'],
+      ['🧘 Morning kegel (2 sets): 10s hold × 15 reps × 2 sets.',
+       '🔄 Reverse kegel introduction: reverse kegels mean relaxing and bearing DOWN the pelvic floor (like gently trying to pass gas). Hold the relaxed-down position for 5 seconds × 10 reps. This teaches voluntary release — as important as squeezing.',
+       '🦵 Hip flexibility: hip circles standing (10 each direction), pigeon pose hold 90s each side, seated groin stretch 60s.',
+       '🧘 Evening kegel (2 sets): 10s hold × 15 reps × 2 sets.'],
+      'Reverse kegels teach voluntary release and full control — without this, the muscles tighten over time and actually reduce performance. Both directions matter.'],
+
+    [T.FULL, ['Jog 30 min','Circuit × 3: 15 squats + 15 push-ups + 12 hip thrusts + 45s plank','Core finisher 10 min'],
+      ['🏃 Jog 30 min warm-up — you\'re now comfortable at this distance. Maintain conversational pace.',
+       '⚡ Circuit × 3 rounds, rest 90s between rounds:\n  → 15 squats\n  → 15 push-ups\n  → 12 hip thrusts (2s pause at top)\n  → 45s plank',
+       '🔥 Core finisher: dead bugs 3 × 10, bicycle crunches 3 × 20, hollow body hold 3 × 20s.',
+       '🧘 Cool-down kegel 10s × 10 × 2.'],
+      'Friday full-body is your most important session of the week. It sets the tone for the whole weekend. Never skip it.'],
+
+    [T.CARDIO, ['Cycle or walk 35 min','Kegel 10s × 15 × 3','Yoga 20 min'],
+      ['🚴 Cycle or brisk walk 35 min. If walking, use hilly terrain to increase intensity without joint stress.',
+       '🧘 Kegel 10s × 15 × 3: try these during your cycle or walk — timed with your steps.',
+       '🧘 20 min yoga routine: cat-cow, downward dog, warrior 1 and 2, pigeon pose, seated forward fold. Each held 45–60s.',
+       '🥑 Eat a high-fat, high-protein dinner tonight — testosterone production depends on dietary fats.'],
+      'Weekend consistency separates people who achieve their 8-month goals from those who stall at 6 weeks. Show up on weekends.'],
+
+    [T.REST, ['Full rest','8–9 hrs quality sleep','Reflect on energy changes','Meal prep proteins for next week'],
+      ['😴 Full rest. No training. Sleep in if you can.',
+       '🌬️ 5 min morning breathing: slow diaphragmatic breaths in bed before getting up. This practice alone reduces morning cortisol.',
+       '🥗 Meal prep batch: cook 1kg of chicken breast or 12 boiled eggs and rice. This eliminates food-prep excuses all week.',
+       '📈 Check in: is your energy different than 3 weeks ago? Breathing feel easier? Notice any changes in mood or motivation?'],
+      'Week 3 complete. Most people who make it to Week 3 make it to Week 12. You\'re past the hardest dropout point.'],
   ];
+
   if (w===4) return [
-    [T.RECOVERY, ['Light walk 20 min','Gentle stretch','Foam roll'],         ['🚶 Easy walk 20 min','🙆 Stretch 15 min','🔵 Foam roll legs + glutes','🧘 Kegel 10s×10×3'],       'Recovery week. Rest IS the training — don\'t skip it.'],
-    [T.KEGEL,    ['Kegel 10s×15×4','Breathing 15 min','Hip mobility'],      ['🧘 Kegel 10s×15×4','🌬️ Box breathing 15 min','🦵 Hip mobility: circles, pigeon pose'],            'Recovery weeks are perfect for kegel volume — zero physical fatigue required.'],
-    [T.RECOVERY, ['Yoga 30 min','Light jog 15 min','Stretch'],              ['🧘 Gentle yoga 30 min','🏃 Light jog 15 min easy','🙆 Stretch after','💧 3L water'],              'Yoga improves flexibility, breathing, and lowers cortisol.'],
-    [T.REST,     ['Full rest','Visualize','Hydrate'],                       ['😴 Full rest','💧 Hydrate well','🧠 Visualize: 5 rounds, full energy, satisfied partner'],          'Mental visualization works. Picture the goal in full detail.'],
-    [T.RECOVERY, ['Walk 25 min','Yoga 20 min','Kegel'],                     ['🚶 Walk 25 min','🧘 Kegel 10s×15×3','🙆 Yoga 20 min','🥑 Healthy fats for hormone support'],       'Healthy fats are critical for testosterone production.'],
-    [T.CARDIO,   ['Easy jog 20 min','Kegel','Stretch'],                     ['🏃 Easy jog 20 min','🧘 Kegel 10s×12×3','🙆 Stretch 15 min'],                                    'Light Saturday keeps blood flowing without fatigue.'],
-    [T.REST,     ['Full rest','8+ hrs sleep','Meal prep'],                  ['😴 8–9 hrs sleep','🥗 Meal prep for the week','📈 1 month in — compare to Day 1'],                '1 month complete. Real habits are formed. Month 2 brings visible changes.'],
+    [T.RECOVERY, ['Light walk 20 min — low intensity','Gentle stretch 15 min','Foam roll legs and glutes','Kegel 10s × 10 × 3'],
+      ['🚶 Easy 20-min walk — very low intensity. This is active recovery, not training. Keep heart rate below 120 bpm.',
+       '🙆 Gentle stretch 15 min: focus on areas that feel tight — typically hips, hamstrings, and calves after 3 hard weeks.',
+       '🔵 Foam roll: spend 2 minutes each on quads, IT band, hamstrings, glutes, and calves. Roll slowly over tight spots.',
+       '🧘 Kegel 10s × 10 × 3 — these never take recovery weeks. Keep the pelvic floor work going.'],
+      'Recovery week is not a failure or laziness — it is a planned physiological tool. Your muscles supercompensate (grow stronger) during recovery weeks.'],
+
+    [T.KEGEL, ['Kegel 10s × 15 reps × 4 sets — twice today','Box breathing 15 min','Hip mobility flow 20 min'],
+      ['🧘 Morning kegel: 10s hold × 15 reps × 2 sets. Really focus on the quality of each squeeze and release.',
+       '🌬️ Box breathing 15 min: inhale 4s, hold 4s, exhale 4s, hold 4s. This is longer than previous weeks — use a timer.',
+       '🦵 Hip mobility flow: hip 90-90 stretch 2 min each, pigeon pose 2 min each, deep squat hold 90s, frog pose 90s.',
+       '🧘 Evening kegel: 10s hold × 15 reps × 2 sets.'],
+      'Recovery weeks are ideal for high-volume kegel training — zero physical fatigue means you can focus entirely on quality and control.'],
+
+    [T.RECOVERY, ['Yoga 30 min full session','Light jog 15 min — very easy','Stretch after jog'],
+      ['🧘 Yoga 30 min: choose a hip-focused yoga routine. Focus on breath and relaxation, not intensity.',
+       '🏃 Light jog 15 min: truly easy, this is a flush — just to keep blood circulating, not a workout. Comfortable breathing throughout.',
+       '🙆 Post-jog stretch: 10 min focusing on any areas that felt tight during yoga.',
+       '💧 Drink 3L water today. Hydration during recovery weeks accelerates the repair process.'],
+      'Yoga reduces cortisol, improves flexibility, and teaches breath control — all directly beneficial for sexual stamina.'],
+
+    [T.REST, ['Complete rest','Mental visualization 10 min','Stay well hydrated'],
+      ['😴 Complete rest — zero exercise.',
+       '🧠 Visualization practice: lie quietly for 10 minutes. Picture yourself performing at your goal level — 5 rounds, full energy, confident, your partner satisfied. Be specific and detailed. Visualization is proven to improve physical performance.',
+       '💧 Drink 3L water with electrolytes if possible.',
+       '🍳 Eat clean today — no alcohol, no processed food. Let your body focus entirely on recovery.'],
+      'Mental rehearsal works. Athletes who visualize specific movements show measurable improvement without physical practice. Use this tool.'],
+
+    [T.RECOVERY, ['Walk 25 min','Yoga 20 min','Kegel 10s × 15 × 3'],
+      ['🚶 Walk 25 min at moderate pace — not a jog, just an active walk.',
+       '🧘 20 min yoga: sun salutations × 3, warrior flow, seated twists, spinal cat-cow.',
+       '🧘 Kegel 10s × 15 × 3 during or after yoga.',
+       '🥑 Have healthy fats with every meal today — avocado, olive oil, nuts, fatty fish. These are essential for testosterone synthesis.'],
+      'Dietary fats are the building blocks of testosterone and other performance hormones. A low-fat diet directly hurts your stamina goals.'],
+
+    [T.CARDIO, ['Easy jog 20 min to close recovery week','Kegel 10s × 12 × 3','Stretch 15 min'],
+      ['🏃 Easy jog 20 min — end of recovery week, last easy session before Phase 1 intensity resumes next week.',
+       '🧘 Kegel 10s × 12 × 3 post-jog.',
+       '🙆 Full 15 min stretch: hip flexors, hamstrings, glutes, shoulders. You should feel noticeably looser than Week 1.',
+       '🥩 Eat a high-protein dinner tonight to set up next week\'s training.'],
+      'This light Saturday keeps blood circulating to muscles without inducing fatigue. You\'ll feel refreshed and ready Monday.'],
+
+    [T.REST, ['Full rest','8–9 hours quality sleep','Meal prep the full week','Compare energy and endurance to Day 1'],
+      ['😴 8–9 hrs sleep. This is non-negotiable. Sleep is when growth hormone is released.',
+       '🥗 Full week meal prep: proteins, complex carbs, vegetables. The goal is to remove food decisions from weekdays.',
+       '📈 One month complete: compare yourself to Day 1. Breathing harder to climb stairs? Heart rate recovery faster? Mood more stable? Write it down.',
+       '🎯 Next week, Phase 1 resumes with slightly higher intensity. Get mentally ready.'],
+      '1 month complete. Real behavioural habits take 21–66 days to form. You\'re at the strong end of that range. Month 2 brings visible physical changes.'],
   ];
-  if (w>=5&&w<=8) return [
-    [T.HIIT,     ['HIIT '+(22+w*2)+' min','Kegel 10s×15×3','Protein'],      ['⚡ HIIT '+(22+w*2)+' min — sprint 40-50s intervals','🧘 Kegel 10s×15×3','🥩 High protein breakfast'], 'HIIT boosts VO2 max — your oxygen efficiency during intense effort.'],
-    [T.STRENGTH, ['Plank 4×'+(35+w*5)+'s','Squats 4×'+(10+w),'Hip thrusts 4×'+(10+w),'Push-ups 4×'+(10+w)], ['🏋️ Plank 4×'+(35+w*5)+'s','🦵 Squats 4×'+(10+w),'🍑 Hip thrusts 4×'+(10+w)+' — 2s pause','💪 Push-ups 4×'+(10+w),'🧘 Kegel 10s×15×4'], 'Pausing at the top doubles hip thrust activation. Quality over speed.'],
-    [T.CARDIO,   ['Run '+(28+w*2)+' min','Kegel','Nasal breathing'],         ['🏃 Steady run '+(28+w*2)+' min','🧘 Kegel 10s×15×3','🌬️ Nasal breathing last 10 min'],            'Nasal breathing trains your lungs to work more efficiently.'],
-    [T.KEGEL,    ['Kegel 10s×20×4','Reverse kegel 5s×15','Breathing'],      ['🧘 Kegel 10s×20×4','🔄 Reverse kegel 5s×15×3','🌬️ 4-7-8 breathing: inhale 4s, hold 7s, exhale 8s'], '4-7-8 breathing activates parasympathetic recovery — faster between efforts.'],
-    [T.FULL,     ['Run '+(22+w*2)+' min','Circuit ×4','Core'],               ['🏃 Run '+(22+w*2)+' min','⚡ Circuit ×4: '+(13+w)+' squats + '+(13+w)+' push-ups + '+(13+w)+' hip thrusts + 50s plank','🔥 Core blast'], 'Week '+w+' endurance is already higher than Week 1. Trust the process.'],
-    [T.CARDIO,   ['Bike/swim '+(33+w*2)+' min','Kegel','Stretch'],           ['🚴 Cycle or swim '+(33+w*2)+' min','🧘 Kegel 10s×15×3','🙆 Stretch 20 min'],                     'Swimming gives cardiovascular work with zero joint impact.'],
-    [T.REST,     ['Rest','Sleep 8–9 hrs','Reflect'],                         ['😴 8–9 hrs sleep','🌬️ Morning breathing','🥗 Healthy meals','📊 Week '+w+': faster heart rate recovery?'], 'Faster recovery = proof your training is working.'],
+
+  // Weeks 5–8: Foundation continuation with progressing numbers
+  if (w>=5 && w<=8) {
+    const jog1 = 22+w*2, jog2 = 28+w*2, jog3 = 22+w*2, bike = 33+w*2;
+    const plankS = 35+w*5, sqR = 10+w, hipR = 10+w, puR = 10+w, circR = 13+w;
+    return [
+      [T.HIIT, ['HIIT '+(jog1+2)+' min — sprint 40s / walk 20s','Kegel 10s × 15 × 3','High-protein breakfast today'],
+        ['⚡ HIIT '+(jog1+2)+' min: warm-up 3 min, then sprint 40 seconds at ~80% effort, walk 20 seconds. Repeat until time is up. Cool down 3 min.',
+         '📊 Aim for 15–18 sprint intervals total. Track how many you complete without slowing the sprint.',
+         '🧘 Kegel 10s × 15 × 3 after HIIT — your heart will be pumping, which trains the body to function under cardiovascular stress.',
+         '🥩 High-protein breakfast on HIIT mornings: 3–4 eggs, or Greek yogurt with nuts, or a protein shake.'],
+        'HIIT directly trains VO2 max — your body\'s oxygen efficiency. Higher VO2 max = more sustained energy during intense effort.'],
+
+      [T.STRENGTH, ['Plank 4 × '+plankS+'s','Squats 4 × '+sqR+' reps','Hip Thrusts 4 × '+hipR+' reps — 2s pause','Push-ups 4 × '+puR+' reps','Kegel 10s × 15 × 4'],
+        ['🏋️ Plank 4 × '+plankS+'s: four sets now. Breathe steadily, squeeze glutes the entire time.',
+         '🦵 Squats 4 × '+sqR+': you\'re at '+sqR+' reps now. If bodyweight feels easy, hold a heavy book or backpack for added resistance.',
+         '🍑 Hip thrusts 4 × '+hipR+' with 2s pause at top: this exercise is the most direct trainer for performance. Do not skip it.',
+         '💪 Push-ups 4 × '+puR+': maintain full range of motion. No half reps.',
+         '🧘 Kegel 10s × 15 × 4 to close.'],
+        'Pausing at the top of a hip thrust doubles muscle activation. Quality of contraction matters more than speed.'],
+
+      [T.CARDIO, ['Steady run '+jog2+' min','Kegel 10s × 15 × 3','Nasal breathing practice last 10 min'],
+        ['🏃 Run '+jog2+' min at a steady, sustainable pace. You should feel challenged but not desperate.',
+         '🌬️ Nasal breathing last 10 min: switch to breathing in AND out through your nose only. This is harder but trains respiratory efficiency significantly.',
+         '🧘 Kegel 10s × 15 × 3 after the run.',
+         '🥩 Protein meal within 45 min of finishing.'],
+        'Nasal breathing trains your lungs to extract more oxygen per breath — a major advantage during sustained intense effort.'],
+
+      [T.KEGEL, ['Kegel 10s × 20 reps × 4 sets','Reverse kegel 5s × 15 × 3','4-7-8 breathing practice 10 min'],
+        ['🧘 Kegel 10s × 20 × 4 — 20 reps per set now. Split morning and evening, 2 sets each.',
+         '🔄 Reverse kegel 5s × 15 × 3: bear down (as if trying to exhale through the pelvic floor) for 5 seconds. Release fully. This is advanced training.',
+         '🌬️ 4-7-8 breathing: inhale 4 seconds, hold 7 seconds, exhale 8 seconds. Do 8 cycles. This technique activates the parasympathetic system — your recovery mode.',
+         '💆 Spend 10 min in a comfortable seated position doing this — no distractions.'],
+        '4-7-8 breathing has been shown to activate parasympathetic recovery within minutes. Use this between rounds to accelerate your heart rate recovery.'],
+
+      [T.FULL, ['Run '+jog3+' min','Circuit × 4 rounds: '+circR+' squats + '+circR+' push-ups + '+circR+' hip thrusts + 50s plank','Core finisher'],
+        ['🏃 Run '+jog3+' min to warm up.',
+         '⚡ Circuit × 4 rounds with 90s rest between rounds:\n  → '+circR+' squats\n  → '+circR+' push-ups\n  → '+circR+' hip thrusts (2s pause at top)\n  → 50s plank',
+         '🔥 Core finisher: dead bugs 3 × 12, Russian twists 3 × 20, hollow body 3 × 25s.',
+         '🧘 Kegel 10s × 10 × 3 cool-down.'],
+        'Week '+w+' endurance is significantly higher than Week 1. Compare how this Friday session feels versus Week 1\'s session. Notice the difference.'],
+
+      [T.CARDIO, ['Cycle or swim '+bike+' min','Kegel 10s × 15 × 3','Stretch 20 min full body'],
+        ['🚴 Cycle or swim '+bike+' min — cross-training variety keeps motivation high and prevents overuse injuries.',
+         '🧘 Kegel 10s × 15 × 3 during or after.',
+         '🙆 Full-body stretch 20 min: prioritise hips, inner thighs, lower back. Hold each position 60–90 seconds.',
+         '🥑 Eat quality fats tonight — salmon, avocado, or a small handful of almonds with dinner.'],
+        'Swimming provides comparable cardiovascular training to running with zero impact on joints — ideal for high-frequency training weeks.'],
+
+      [T.REST, ['Full rest','8–9 hrs quality sleep','Reflect on heart rate recovery speed','Meal prep'],
+        ['😴 8–9 hrs sleep. If you can, go to bed 30 min earlier tonight.',
+         '🌬️ Morning breathing 5 min before rising.',
+         '🥗 Meal prep for the week.',
+         '📊 Week '+w+' check: time how long it takes your heart rate to drop from high-intensity back to normal. Compare to Week 1. Faster recovery = the training is working.'],
+        'Faster heart rate recovery is the clearest measurable sign of improving cardiovascular fitness. Track it every few weeks.'],
+    ];
+  }
+
+  // Weeks 9–18: Breakthrough Phase
+  if (w>=9 && w<=18) return [
+    [T.HIIT, ['HIIT 30–35 min elite intervals — sprint 50s / walk 10s','Kegel 12s × 20 × 3','Cold shower after'],
+      ['⚡ Breakthrough HIIT: warm-up 3 min. Sprint 50 seconds at 80–85% effort, walk 10 seconds (barely recovering), repeat for 30–35 min.',
+       '📊 This is harder than Phase 1. You should feel significantly challenged. Track how many full-intensity intervals you complete.',
+       '🧘 Kegel 12s × 20 × 3 after — 12 second holds now. These should feel strong and controlled.',
+       '🚿 Cold shower for 60–90 seconds post-workout. Reduces inflammation, speeds muscle recovery, and builds mental resilience.'],
+      'Phase 2 begins. Your body has been prepared for 8 weeks. This HIIT level would have been impossible in Week 1.'],
+
+    [T.STRENGTH, ['Squats 5 × 15 reps','Hip Thrusts 5 × 15 with 3s pause','Plank 5 × 60–90s','Push-ups 5 × 18','Kegel 12s × 20 × 3'],
+      ['🦵 Squats 5 × 15: five sets now. Add weight if possible — even a backpack with books makes a real difference.',
+       '🍑 Hip thrusts 5 × 15 with 3s pause at top: three second squeeze. Count it out loud if needed. This is advanced hip thrust work.',
+       '🏋️ Plank 5 × 60–90s: if 60s feels achievable, push toward 90s. Your core is significantly stronger than Week 1.',
+       '💪 Push-ups 5 × 18: 90 total push-ups this session. Break them into sets with strict form — no sagging.'],
+      'Phase 2 strength: you\'re now training at a level that would be considered advanced for most gym-goers.'],
+
+    [T.CARDIO, ['Run 45–55 min steady','Kegel 12s × 20 × 3','Nasal breathing last 15 min of run'],
+      ['🏃 45–55 min run: this is a serious distance. Break it into mental thirds — first 15 min warm-up, middle 20 min steady, final 10–20 min push.',
+       '🌬️ Last 15 min: nasal breathing in AND out. This is hard at this distance. Start now and your lung capacity will significantly improve by Phase 3.',
+       '🧘 Kegel 12s × 20 × 3 after the run, while stretching.',
+       '🥩 High-protein recovery meal within 45 min.'],
+      'Running 45–55 minutes continuously puts you in the top 15% of fitness for your age group. This is exceptional.'],
+
+    [T.KEGEL, ['Kegel 12s × 20 reps × 5 sets — split AM and PM','Reverse kegel 10s × 20 × 3','Discuss pacing strategy with partner'],
+      ['🧘 Morning kegel: 12s hold × 20 reps × 3 sets. Quality over speed — full release between every rep.',
+       '🔄 Reverse kegel 10s × 20 × 3: longer reverse holds now. Focus on the "letting go" sensation.',
+       '💬 Pacing conversation: talk to your partner about what rhythm and pacing works best. Strategic pacing can reduce energy expenditure by up to 40%.',
+       '🧘 Evening kegel: 12s hold × 20 reps × 2 sets before bed.'],
+      'Understanding and discussing pacing strategy with your partner is often the single biggest performance breakthrough. Communication matters.'],
+
+    [T.FULL, ['Run 40–50 min','Circuit × 4–5 rounds: 20 squats + 20 push-ups + 20 hip thrusts + 75s plank','Attempt 4th round tonight'],
+      ['🏃 Run 40–50 min, moderate-to-challenging pace.',
+       '⚡ Circuit × 4–5 rounds, rest 90s between:\n  → 20 squats\n  → 20 push-ups\n  → 20 hip thrusts (2s pause at top)\n  → 75s plank',
+       '🎯 TONIGHT: attempt 4 rounds with your partner. Use your pacing knowledge, breathe through your nose, use the 4-7-8 technique between rounds.',
+       '📝 Track honestly: how many rounds did you complete? What gave out first — cardio, strength, or focus?'],
+      '🔥 This is a breakthrough week. Push for 4 rounds. Your fitness can support it now. What you discover tonight shapes the next phase of training.'],
+
+    [T.CARDIO, ['Run or swim 45–50 min','Kegel 12s × 20 × 3','Yoga 20 min evening'],
+      ['🏃 45–50 min long cardio: run or swim. If it feels easy at 30 min, increase pace.',
+       '🧘 Kegel 12s × 20 × 3 after.',
+       '🧘 Yoga 20 min: hip-focused session — pigeon pose, fire hydrant circles, seated butterfly, supine twist.',
+       '💧 Drink 3L water today. Recovery on weekends is as important as the weekday training.'],
+      'Phase 2 weekend cardio should be feeling manageable now. If it feels easy the whole time, increase pace slightly next week.'],
+
+    [T.REST, ['Full rest','9 hrs sleep','Honest debrief on round attempts','Plan Week '+(w+1)+' targets'],
+      ['😴 9 hours sleep tonight — your recovery debt from this week\'s intensity needs a full repayment.',
+       '📝 Debrief: how many rounds did you achieve this week? What was the limiting factor? Write it down specifically.',
+       '🧠 Plan next week: set a specific target number of rounds. Write it down. Tell your partner.',
+       '💧 3L water, no alcohol, clean eating today.'],
+      'Honest self-assessment is the fastest path to improvement. Knowing your exact limit lets you target your weakest link directly.'],
   ];
-  if (w>=9&&w<=18) return [
-    [T.HIIT,     ['HIIT 30-35 min','Kegel 12s×20×3','Cold shower'],          ['⚡ HIIT 30-35 min: sprint 50s, walk 10s','🧘 Kegel 12s×20×3','🚿 Cold shower post-workout'],      'Phase 2: body is ready for 4 rounds. The mental shift is the main hurdle now.'],
-    [T.STRENGTH, ['Squats 5×15','Hip thrusts 5×15','Plank 5×60s','Push-ups 5×18'], ['🦵 Squats 5×15','🍑 Hip thrusts 5×15 — 3s pause','🏋️ Plank 5×60-90s','💪 Push-ups 5×18','🧘 Kegel 12s×20×3'], 'Phase 2 strength: maintain peak while optimizing for performance.'],
-    [T.CARDIO,   ['Run 45-55 min','Kegel','Nasal breathing'],                ['🏃 Run 45-55 min steady','🧘 Kegel 12s×20×3','🌬️ Nasal-only breathing last 15 min'],              '45-55 min runs build the aerobic base for sustained energy.'],
-    [T.KEGEL,    ['Kegel 12-15s×20×5','Reverse kegel','Pacing talk'],       ['🧘 Kegel 12-15s×20×5 sets','🔄 Reverse kegel 10s×20×3','💬 Discuss pacing strategy with partner'], 'Strategic pacing can reduce energy waste by 40%. Discuss rhythm and rest.'],
-    [T.FULL,     ['Run 40-50 min','Circuit ×4-5','4-round attempt'],         ['🏃 Run 40-50 min','⚡ Circuit ×4-5: 20 squats + 20 push-ups + 20 hip thrusts + 75s plank','🎯 ATTEMPT 4TH ROUND tonight!'], '🔥 Go for 4 rounds. Track how close you get — this is the breakthrough week.'],
-    [T.CARDIO,   ['Run/swim 45-50 min','Kegel','Yoga'],                      ['🏃 Long cardio 45-50 min or swim','🧘 Kegel 12-15s×20×3','🧘 Yoga 20 min evening'],               'Phase 2 weekend cardio should feel manageable — if easy, push the pace.'],
-    [T.REST,     ['Full rest','Sleep 9 hrs','Debrief'],                      ['😴 9 hrs sleep','💧 3L water','📝 Debrief: attempt round 4? What happened?'],                     'Honest debrief helps you make targeted improvements next week.'],
+
+  // Weeks 19–27: Peak Performance Phase
+  if (w>=19 && w<=27) return [
+    [T.HIIT, ['Elite HIIT 40 min — 55s sprint / 5s rest','Kegel 15s × 25 × 3','Cold shower 90s after'],
+      ['⚡ Elite HIIT: 55 seconds sprint at 85–90% maximum effort, 5 seconds rest (barely catching breath), repeat for 40 min.',
+       '📊 This is the highest intensity HIIT in the program. You should feel genuinely challenged. 20+ intervals is the target.',
+       '🧘 Kegel 15s × 25 × 3 after — 15-second holds. These should feel strong now after months of training.',
+       '🚿 Cold shower 90 seconds. You\'ve earned it. Reduces inflammation and enhances mental sharpness.'],
+      'Phase 3: 5 rounds is now your standard target. Your cardiovascular system can sustain this — it\'s been built for 18 weeks.'],
+
+    [T.STRENGTH, ['Squats 5 × 20 reps','Hip Thrusts 5 × 20 with 3s hold','Push-ups 5 × 25','Plank 5 × 90s','Kegel 15s × 20 × 3'],
+      ['🦵 Squats 5 × 20: 100 total squats. Add as much weight as possible — a loaded backpack, dumbbells, or barbell.',
+       '🍑 Hip thrusts 5 × 20 with 3s hold: this is peak hip thrust volume for the program. Control the movement completely.',
+       '💪 Push-ups 5 × 25: 125 total. If all 5 sets are clean, try 10 wide-grip + 10 diamond + 5 standard per set next week.',
+       '🏋️ Plank 5 × 90s: elite core endurance. Squeeze everything — glutes, abs, quads — throughout.',
+       '🧘 Kegel 15s × 20 × 3 to close.'],
+      'Upper back strength (rows, pull-ups) becomes increasingly important for sustained performance positions. Add if possible.'],
+
+    [T.CARDIO, ['1-HOUR continuous run','Kegel 15s × 20 × 3','Nasal breathing final 25 min'],
+      ['🏃 1 HOUR continuous run — this is a significant achievement that the vast majority of adults cannot do. Celebrate when you finish.',
+       '📊 Aim for steady pace the whole hour. If you need to slow down slightly at the 45-min mark, that\'s fine — keep moving.',
+       '🌬️ Final 25 min: nasal breathing only. This trains your aerobic system at a cellular level.',
+       '🧘 Kegel 15s × 20 × 3 after, while stretching and recovering.',
+       '🥩 Big protein meal within 45 min — you\'ve earned it.'],
+      'A 1-hour continuous run places you in exceptional fitness territory. Remember: in Week 1 you jogged for 20 minutes. This is transformation.'],
+
+    [T.KEGEL, ['Kegel 15s × 25 reps × 5 sets — AM and PM','Reverse kegel 12s × 20 × 3','Energy distribution strategy practice'],
+      ['🧘 Morning kegel: 15s hold × 25 reps × 3 sets.',
+       '🔄 Reverse kegel 12s × 20 × 3: full voluntary release and control. You should have strong command of both directions by now.',
+       '💬 Energy strategy: rounds 1–2 at 70% effort (controlled, smooth), rounds 3–4 at 85%, round 5 at full effort. Practice pacing this way — not going 100% from the start.',
+       '🧘 Evening kegel: 15s hold × 25 reps × 2 sets.'],
+      'Strategic energy distribution is the difference between 3 rounds and 5. Starting at 70% and building feels counterintuitive but yields better total performance.'],
+
+    [T.FULL, ['Run 55 min','Elite circuit × 5 rounds: 25 squats + 25 push-ups + 25 hip thrusts + 90s plank','Attempt 5 rounds tonight'],
+      ['🏃 Run 55 min to warm up — nearly an hour of running as a warm-up to a circuit. This is elite fitness.',
+       '⚡ Elite circuit × 5 rounds, 90s rest between:\n  → 25 squats\n  → 25 push-ups\n  → 25 hip thrusts (3s hold at top)\n  → 90s plank',
+       '🎯 TONIGHT: attempt all 5 rounds with your partner. Use 70-85-100% pacing strategy. Breathe through your nose. Apply 4-7-8 between rounds.',
+       '📝 Track: did you complete 5 rounds? How did energy hold across rounds? What changes next time?'],
+      '🔥 Go for 5 rounds tonight. Your body has been built for this exact performance over 4+ months. Execute.'],
+
+    [T.RECOVERY, ['Long swim or run 60 min','Kegel 15s × 20 × 3','Yoga 30 min hip focus','Foam rolling 15 min'],
+      ['🏊 Swim 60 min OR run 60 min. This is an active recovery-quality session, not a race.',
+       '🧘 Kegel 15s × 20 × 3 during cool-down.',
+       '🧘 Yoga 30 min: deep hip-focused session — 90-90, pigeon, figure-4, happy baby. Hold each 90s minimum.',
+       '🔵 Foam rolling 15 min: quads, IT band, glutes, lats. Go slow over tight spots.'],
+      'Phase 3 weekend training is at a level that would impress professional athletes. Train and eat like an athlete every single day now.'],
+
+    [T.REST, ['Full rest','9 hours sleep','Identify what gives out first','Set Phase 3 performance benchmarks'],
+      ['😴 9 hrs sleep — peak performance recovery requires more sleep than base training.',
+       '📊 Analyze: in your 5-round attempts, what fails first? Cardiovascular endurance? Muscular strength? Focus and mindset? Identify specifically.',
+       '🧠 Set benchmarks: write target numbers for the next 3 weeks. How many rounds? What heart rate at 30 min of running?',
+       '💧 3L water, clean nutrition, no alcohol.'],
+      'Precisely identifying your performance limiter allows targeted training focus. Cardio limit → more HIIT. Strength limit → more sets. Mindset limit → visualization.'],
   ];
-  if (w>=19&&w<=27) return [
-    [T.HIIT,     ['HIIT 40 min elite','Kegel 15s×25×3','Cold shower'],       ['⚡ Elite HIIT 40 min: 55s sprint / 5s rest × 20','🧘 Kegel 15s×25×3','🚿 Cold shower'],          'Phase 3: 5 rounds is now your standard target.'],
-    [T.STRENGTH, ['Squats 5×20','Hip thrusts 5×20','Push-ups 5×25','Plank 5×90s'], ['🦵 Squats 5×20','🍑 Hip thrusts 5×20 — 3s hold','💪 Push-ups 5×25','🏋️ Plank 5×90s','🧘 Kegel 15s×20×3'], 'Upper back strength (rows/pull-ups) is critical for sustained performance.'],
-    [T.CARDIO,   ['Run 60+ min','Kegel 15s×20×3','Nasal breathing'],         ['🏃 1 HOUR RUN — a huge milestone!','🧘 Kegel 15s×20×3','🌬️ Nasal breathing last 25 min','🥩 High protein recovery'], '1-hour continuous run = exceptional fitness. Most adults cannot do this.'],
-    [T.KEGEL,    ['Kegel 15s×25×5','Reverse kegel 12s×20×3','Pacing'],      ['🧘 Kegel 15s×25×5 sets','🔄 Reverse kegel 12s×20×3','💬 Rounds 1-2 at 70%, 3-4 at 85%, round 5 full'], 'Strategic energy distribution: save your peak for the final round.'],
-    [T.FULL,     ['Run 55 min','Elite circuit','5 rounds tonight'],          ['🏃 Run 55 min','⚡ Circuit ×5: 25 squats + 25 push-ups + 25 hip thrusts + 90s plank','🎯 ATTEMPT 5 ROUNDS tonight!'], '🔥 Go for 5 rounds. Your fitness supports it completely. DO IT.'],
-    [T.RECOVERY, ['Long run/swim 60 min','Kegel','Yoga 30 min'],             ['🏊 Swim or 60 min run','🧘 Kegel 15s×20×3','🧘 Yoga 30 min hip focus','💆 Foam rolling 15 min'],  'Phase 3 weekend = elite level. Train and eat like an athlete all week.'],
-    [T.REST,     ['Full rest','9 hrs sleep','Check-in'],                     ['😴 9 hrs sleep','🥗 Great nutrition','📊 Have you hit 5 rounds? What gives out first?'],           'Identify your exact limiter — cardio, strength, or mindset?'],
-  ];
+
+  // Weeks 28–36: Mastery Phase
   return [
-    [T.HIIT,     ['HIIT 35 min maintain','Kegel 15s×20×3','Cold shower'],    ['⚡ HIIT 35 min maintenance','🧘 Kegel 15s×20×3','🚿 Cold shower','💧 3L water'],                   'Phase 4: make this sustainable for life.'],
-    [T.STRENGTH, ['Squats 4×15','Hip thrusts 4×15','Push-ups 4×18','Plank 4×75s'], ['🦵 Squats 4×15','🍑 Hip thrusts 4×15 — 2s hold','💪 Push-ups 4×18','🏋️ Plank 4×75s','🧘 Kegel 15s×20×3'], 'Maintenance = 70% of peak volume. Retains all gains without burnout.'],
-    [T.CARDIO,   ['Run 50 min, enjoy it','Kegel 15s×20×3'],                  ['🏃 Run 50 min — you\'ve earned this','🧘 Kegel 15s×20×3','🎵 Music or podcast you love'],           'Phase 4 goal: fall in love with exercise so you never stop.'],
-    [T.KEGEL,    ['Kegel 15s×20×4','Reverse kegel','Quality time'],          ['🧘 Kegel 15s×20×4','🔄 Reverse kegel 10s×20×3','💑 Quality connection time with partner'],        'Reminder: the goal was always deeper intimacy. Fitness is the tool.'],
-    [T.FULL,     ['Run 45 min','Maintain circuit','Kegel'],                  ['🏃 Run 45 min','⚡ Circuit ×4: 20 squats + 20 push-ups + 20 hip thrusts + 75s plank','🧘 Kegel 15s×15×3'], 'You\'ve transformed your body over 7+ months. This session is a celebration.'],
-    [T.CARDIO,   ['Fun activity 45 min','Kegel','Yoga'],                     ['🎮 Football, badminton, swimming, dancing — 45 min!','🧘 Kegel 15s×20×3','🧘 Yoga 20 min'],       'Exercise should feel like joy, not a chore.'],
-    [T.REST,     ['Full rest','Quality sleep','Celebrate'],                  ['😴 9 hrs quality sleep','💑 Quality time with partner','🎉 You are 5-round capable — celebrate!'], 'Every Sunday in Phase 4 is a celebration of what you\'ve built.'],
+    [T.HIIT, ['Maintenance HIIT 35 min — 50s sprint / 10s rest','Kegel 15s × 20 × 3','Cold shower'],
+      ['⚡ Maintenance HIIT 35 min: 50s sprint at ~80% effort, 10s rest. Sustainable but challenging. 70% of peak volume.',
+       '📊 Track your interval count. You should be hitting 15+ clean high-intensity intervals consistently now.',
+       '🧘 Kegel 15s × 20 × 3 post-HIIT.',
+       '🚿 Cold shower 90s. This is now a standard practice for you.'],
+      'Phase 4 goal: build a lifestyle that sustains this level of fitness permanently. 70% of peak volume retains 100% of gains without risk of burnout.'],
+
+    [T.STRENGTH, ['Squats 4 × 15 reps','Hip Thrusts 4 × 15 with 2s hold','Push-ups 4 × 18','Plank 4 × 75s','Kegel 15s × 20 × 3'],
+      ['🦵 Squats 4 × 15: maintenance volume. Add weight if you haven\'t been — bodyweight squats should feel very easy now.',
+       '🍑 Hip thrusts 4 × 15 with 2s hold: never drop these. They are your most direct performance trainer.',
+       '💪 Push-ups 4 × 18: clean reps, full range. If easy, try plyometric (clap) push-ups for the last 5 reps each set.',
+       '🏋️ Plank 4 × 75s: solid maintenance plank. Your core strength is dramatically higher than Day 1.',
+       '🧘 Kegel 15s × 20 × 3 to close.'],
+      'Maintenance training at 70% of peak volume has been scientifically shown to retain nearly 100% of fitness gains. You do not need to keep pushing harder.'],
+
+    [T.CARDIO, ['Run 50 min — enjoy it, listen to something you love','Kegel 15s × 20 × 3'],
+      ['🏃 Run 50 min — this is now your comfortable, enjoyable run distance. Put on your favourite music or podcast and enjoy the movement.',
+       '📊 Notice: what felt like a maximal effort in Week 3 is now a relaxed 50-min run. This is 7+ months of work paying off.',
+       '🧘 Kegel 15s × 20 × 3 after, while stretching.',
+       '🎵 Pick music or a podcast you\'ve been saving for a special occasion. This run is worth it.'],
+      'Phase 4 goal is to fall in love with exercise so you never stop. Find the version of movement that brings you joy.'],
+
+    [T.KEGEL, ['Kegel 15s × 20 reps × 4 sets','Reverse kegel 10s × 20 × 3','Quality connection time with partner'],
+      ['🧘 Morning kegel: 15s × 20 × 2 sets.',
+       '🔄 Reverse kegel 10s × 20 × 3: you should have full command of both directions by now. These are maintenance holds.',
+       '💑 Quality time with your partner: the goal was always deeper intimacy. The fitness and stamina training was the tool. Prioritize genuine connection today.',
+       '🧘 Evening kegel: 15s × 20 × 2 sets.'],
+      'Reminder: all of this training was built around a goal of deeper connection with your partner. Today is about that — not the reps.'],
+
+    [T.FULL, ['Run 45 min','Maintenance circuit × 4: 20 squats + 20 push-ups + 20 hip thrusts + 75s plank','Kegel 15s × 15 × 3'],
+      ['🏃 Run 45 min — comfortable, enjoyable pace.',
+       '⚡ Maintenance circuit × 4 rounds, 90s rest:\n  → 20 squats\n  → 20 push-ups\n  → 20 hip thrusts (2s hold)\n  → 75s plank',
+       '🧘 Kegel 15s × 15 × 3 to close.',
+       '🎉 This session represents 7+ months of committed training. You are now one of the fittest people in your social circle. Be proud of that.'],
+      'You have transformed your body, cardiovascular system, and pelvic floor over 7+ months. This Friday session is not just a workout — it\'s a celebration.'],
+
+    [T.CARDIO, ['Fun physical activity 45 min — football, badminton, swimming, dancing','Kegel 15s × 20 × 3','Yoga 20 min'],
+      ['🎮 Choose your favourite physical activity: five-a-side football, badminton, swimming, dancing, cycling with a friend — anything active that feels like fun.',
+       '📊 45 min of active movement. This is your "free play" session — no structure needed.',
+       '🧘 Kegel 15s × 20 × 3 after.',
+       '🧘 Yoga 20 min to close the week.'],
+      'Exercise should feel like joy, not a chore. If it feels like a burden, you won\'t sustain it for life. Find your fun.'],
+
+    [T.REST, ['Full rest','9 hrs quality sleep','Quality time with partner','Celebrate — you did it'],
+      ['😴 9 hrs sleep.',
+       '💑 Quality, unhurried time with your partner. This is the goal you worked for 7+ months to achieve.',
+       '🎉 Celebrate genuinely: you went from 20-minute jogs to 1-hour runs. From struggling to 1 round to 5 full rounds. This is extraordinary.',
+       '📓 Write a final note to yourself: who you were on Day 1 vs who you are now. Keep it. Read it in a year.'],
+      'Every Sunday in Phase 4 is a celebration of the person you chose to become. Well done.'],
   ];
 }
 
 function getPhase(w){
-  if(w<=8)  return{id:'p1',color:'#ff6b47',label:'Foundation'};
-  if(w<=18) return{id:'p2',color:'#e8ff47',label:'Breakthrough'};
-  if(w<=27) return{id:'p3',color:'#47d4ff',label:'Peak Performance'};
-  return         {id:'p4',color:'#b47cff',label:'Mastery'};
+  if(w<=8)  return {id:'p1', color:'#ff6b47', label:'Foundation'};
+  if(w<=18) return {id:'p2', color:'#e8ff47', label:'Breakthrough'};
+  if(w<=27) return {id:'p3', color:'#47d4ff', label:'Peak'};
+  return          {id:'p4', color:'#b47cff', label:'Mastery'};
 }
 
-const dayMap={};
-const endDate=new Date(2026,11,31);
-let cur=new Date(START),dow=0,wk=1;
-while(cur<=endDate){
-  const plan=wp(wk),d=dow%7,[type,short,detail,tip]=plan[d];
-  const k=cur.getFullYear()+'-'+cur.getMonth()+'-'+cur.getDate();
-  dayMap[k]={date:new Date(cur),type,short,detail,tip,week:wk,phase:getPhase(wk),dow:d};
+// ── BUILD DAY MAP ──
+const dayMap = {};
+const scheduleEnd = new Date(2026, 11, 31);
+scheduleEnd.setHours(0,0,0,0);
+
+let cur = new Date(START), dow = 0, wk = 1;
+while(cur <= scheduleEnd){
+  const plan = wp(wk);
+  const d = dow % 7;
+  const [type, short, detail, tip] = plan[d];
+  const k = cur.getFullYear()+'-'+cur.getMonth()+'-'+cur.getDate();
+  dayMap[k] = {date: new Date(cur), type, short, detail, tip, week:wk, phase:getPhase(wk), dow:d};
   cur.setDate(cur.getDate()+1);
   dow++;
-  if(dow%7===0)wk++;
-  if(wk>36)wk=36;
+  if(dow % 7 === 0) wk++;
+  if(wk > 36) wk = 36;
 }
 
-const TOTAL=Object.keys(dayMap).length;
+// Total scheduled days
+const ALL_DAYS = Object.keys(dayMap);
+const TOTAL = ALL_DAYS.length;
 
-function dk(d){return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();}
-function isToday(d){return dk(d)===dk(TODAY);}
-function isPast(d){return d>=START&&d<TODAY&&!isToday(d);}
-function dayNum(d){return Math.floor((d-START)/864e5)+1;}
+const MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const DN = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const DNF = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
 
-const MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
-const DN=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const DNF=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+function dk(d){ return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate(); }
+function isToday(d){ return dk(d)===dk(TODAY); }
+function isPast(d){ return d>=START && d<TODAY && !isToday(d); }
 
+// Dynamic day number from START
+function dayNum(d){
+  const diff = Math.floor((d - START) / 86400000) + 1;
+  return diff;
+}
+
+// ── DYNAMIC PROGRESS: count days elapsed from START to TODAY ──
 function updateProgress(){
-  const n=dayNum(TODAY);
-  const clamped=Math.max(1,Math.min(n,TOTAL));
-  const pct=Math.round(((clamped)/TOTAL)*100);
-  document.getElementById('progressBar').style.width=pct+'%';
-  document.getElementById('progressLabel').textContent='Day '+clamped+' of '+TOTAL;
-  document.getElementById('progressPct').textContent=pct+'%';
+  const todayKey = dk(TODAY);
+  const startKey = dk(START);
+
+  // Count how many scheduled days have passed (including today)
+  let elapsed = 0;
+  ALL_DAYS.forEach(k => {
+    const d = dayMap[k].date;
+    if(d <= TODAY) elapsed++;
+  });
+
+  const pct = Math.round((elapsed / TOTAL) * 100);
+  const clamped = Math.max(0, Math.min(pct, 100));
+
+  document.getElementById('progressBar').style.width = clamped + '%';
+  document.getElementById('progressPct').textContent = clamped + '%';
+
+  // Show current day number if we're within the schedule
+  if(TODAY >= START && TODAY <= scheduleEnd && dayMap[todayKey]){
+    const dn = dayNum(TODAY);
+    document.getElementById('progressLabel').textContent = 'Day ' + dn + ' of ' + TOTAL;
+  } else if(TODAY < START){
+    document.getElementById('progressLabel').textContent = 'Starts Apr 20, 2026';
+    document.getElementById('progressPct').textContent = '0%';
+    document.getElementById('progressBar').style.width = '0%';
+  } else {
+    document.getElementById('progressLabel').textContent = 'Schedule Complete!';
+  }
 }
 
+// ── RENDER ──
 function renderCalendar(filter){
-  filter=filter||'all';
-  const cont=document.getElementById('mainContent');
-  cont.innerHTML='';
+  filter = filter || 'all';
+  const cont = document.getElementById('mainContent');
+  cont.innerHTML = '';
 
-  const td=dayMap[dk(TODAY)];
-  if(td){
-    const b=document.createElement('div');
-    b.className='today-banner';
-    b.onclick=scrollToToday;
-    b.innerHTML='<div class="today-banner-pulse"></div>'
-      +'<div class="today-banner-label">'+DNF[td.dow]+', '+MN[TODAY.getMonth()]+' '+TODAY.getDate()+' — Day '+dayNum(TODAY)+' of '+TOTAL+'</div>'
-      +'<div class="today-banner-detail">'+td.type.icon+' '+td.type.label+' · '+td.phase.label+' ↓</div>';
+  // Today banner
+  const todayKey = dk(TODAY);
+  if(dayMap[todayKey]){
+    const td = dayMap[todayKey];
+    const b = document.createElement('div');
+    b.className = 'today-banner';
+    b.onclick = scrollToToday;
+    b.innerHTML =
+      '<div class="today-banner-pulse"></div>' +
+      '<div class="today-banner-label">' + DNF[td.dow] + ', ' + MN[TODAY.getMonth()] + ' ' + TODAY.getDate() + ' — Day ' + dayNum(TODAY) + ' of ' + TOTAL + '</div>' +
+      '<div class="today-banner-detail">' + td.type.icon + ' ' + td.type.label + ' · ' + td.phase.label + ' ↓</div>';
     cont.appendChild(b);
   }
 
-  for(var month=3;month<=11;month++){
-    var firstDay=new Date(2026,month,1),lastDay=new Date(2026,month+1,0);
-    var blk=document.createElement('div');
-    blk.className='month-block';
-    blk.id='month-'+month;
+  // Determine month range
+  const startMonth = START.getMonth(); // 3 = April
+  const startYear = START.getFullYear(); // 2026
+  const endMonth = scheduleEnd.getMonth(); // 11 = December
+  const endYear = scheduleEnd.getFullYear(); // 2026
 
-    var dp=null;
-    for(var dd=1;dd<=lastDay.getDate();dd++){
-      var kk=dk(new Date(2026,month,dd));
-      if(dayMap[kk]){dp=dayMap[kk].phase;break;}
+  for(let month = startMonth; month <= endMonth; month++){
+    const firstDay = new Date(startYear, month, 1);
+    const lastDay = new Date(startYear, month + 1, 0);
+
+    const blk = document.createElement('div');
+    blk.className = 'month-block';
+    blk.id = 'month-' + month;
+
+    // Find phase color for this month
+    let dp = null;
+    for(let dd = 1; dd <= lastDay.getDate(); dd++){
+      const kk = dk(new Date(startYear, month, dd));
+      if(dayMap[kk]){ dp = dayMap[kk].phase; break; }
     }
-    var pc=dp?dp.color:'#fff';
+    const pc = dp ? dp.color : '#fff';
 
-    var hdr=document.createElement('div');
-    hdr.className='month-header';
-    hdr.innerHTML='<div class="month-name" style="color:'+pc+'">'+MN[month]+'</div>'
-      +'<div class="month-year">2026</div>'
-      +(dp?'<div class="month-phase-tag" style="color:'+pc+';border-color:'+pc+';background:'+pc+'15">'+dp.label+'</div>':'');
+    const hdr = document.createElement('div');
+    hdr.className = 'month-header';
+    hdr.innerHTML =
+      '<div class="month-name" style="color:'+pc+'">'+MN[month]+'</div>' +
+      '<div class="month-year">'+startYear+'</div>' +
+      (dp ? '<div class="month-phase-tag" style="color:'+pc+';border-color:'+pc+';background:'+pc+'18">'+dp.label+'</div>' : '');
     blk.appendChild(hdr);
 
-    /* Single unified grid — DOW headers + day cells, no gap between them */
-    var grid=document.createElement('div');
-    grid.className='calendar-grid';
+    const grid = document.createElement('div');
+    grid.className = 'calendar-grid';
 
-    /* Row 0: day-of-week labels */
-    DN.forEach(function(n){
-      var l=document.createElement('div');
-      l.className='dow-label';
-      l.textContent=n;
+    // DOW headers
+    DN.forEach(n => {
+      const l = document.createElement('div');
+      l.className = 'dow-label';
+      l.textContent = n;
       grid.appendChild(l);
     });
 
-    /* Offset blank cells */
-    var offset=(firstDay.getDay()+6)%7;
-    for(var i=0;i<offset;i++){
-      var blank=document.createElement('div');
-      blank.className='day-cell empty';
+    // Offset blank cells (Monday-based week)
+    const offset = (firstDay.getDay() + 6) % 7;
+    for(let i = 0; i < offset; i++){
+      const blank = document.createElement('div');
+      blank.className = 'day-cell empty';
       grid.appendChild(blank);
     }
 
-    /* Day cells */
-    for(var dd=1;dd<=lastDay.getDate();dd++){
-      var dt=new Date(2026,month,dd);
-      var k2=dk(dt);
-      var data=dayMap[k2];
-      var cell=document.createElement('div');
+    // Day cells
+    for(let dd = 1; dd <= lastDay.getDate(); dd++){
+      const dt = new Date(startYear, month, dd);
+      const k2 = dk(dt);
+      const data = dayMap[k2];
+      const cell = document.createElement('div');
 
       if(!data){
-        cell.className='day-cell empty';
+        cell.className = 'day-cell empty';
       } else {
-        var show=(filter==='all')||(data.phase.id===filter);
-        if(!show){cell.className='day-cell empty';grid.appendChild(cell);continue;}
-        var tod=isToday(dt),past=isPast(dt);
-        cell.className='day-cell '+data.type.cls+(tod?' today':'')+(past?' past':'');
-        if(tod)cell.id='today-cell';
+        const show = (filter === 'all') || (data.phase.id === filter);
+        if(!show){ cell.className = 'day-cell empty'; grid.appendChild(cell); continue; }
 
-        var tasksHtml=data.short.slice(0,3).map(function(t){
-          return '<div class="task-item"><span class="task-dot"></span>'+t+'</div>';
-        }).join('');
+        const tod = isToday(dt);
+        const past = isPast(dt);
+        cell.className = 'day-cell ' + data.type.cls + (tod ? ' today' : '') + (past ? ' past' : '');
+        if(tod) cell.id = 'today-cell';
+
+        const tasksHtml = data.short.slice(0, 3).map(t =>
+          '<div class="task-item"><span class="task-dot"></span>' + t + '</div>'
+        ).join('');
 
         if(tod){
-          cell.innerHTML=
-            '<div class="day-header">'
-              +'<span class="day-num is-today">'+dt.getDate()+'</span>'
-              +'<span class="today-chip">TODAY</span>'
-            +'</div>'
-            +'<div class="today-daynum">Day '+dayNum(dt)+' of '+TOTAL+'</div>'
-            +'<div class="day-badge" style="background:'+data.type.bg+';color:'+data.type.color+'">'+data.type.icon+' '+data.type.label+'</div>'
-            +'<div class="day-tasks">'+tasksHtml+'</div>';
+          cell.innerHTML =
+            '<div class="day-header">' +
+              '<span class="day-num is-today">' + dt.getDate() + '</span>' +
+              '<span class="today-chip">TODAY</span>' +
+            '</div>' +
+            '<div class="today-daynum">Day ' + dayNum(dt) + ' of ' + TOTAL + '</div>' +
+            '<div class="day-badge" style="background:'+data.type.bg+';color:'+data.type.color+'">'+data.type.icon+' '+data.type.label+'</div>' +
+            '<div class="day-tasks">' + tasksHtml + '</div>';
         } else {
-          cell.innerHTML=
-            '<div class="day-header">'
-              +'<span class="day-num">'+dt.getDate()+'</span>'
-            +'</div>'
-            +'<div class="day-badge" style="background:'+data.type.bg+';color:'+data.type.color+'">'+data.type.icon+' '+data.type.label+'</div>'
-            +'<div class="day-tasks">'+tasksHtml+'</div>'
-            +'<div class="day-tip">'+data.tip.substring(0,60)+'…</div>';
+          cell.innerHTML =
+            '<div class="day-header">' +
+              '<span class="day-num">' + dt.getDate() + '</span>' +
+            '</div>' +
+            '<div class="day-badge" style="background:'+data.type.bg+';color:'+data.type.color+'">'+data.type.icon+' '+data.type.label+'</div>' +
+            '<div class="day-tasks">' + tasksHtml + '</div>' +
+            '<div class="day-tip">' + data.tip.substring(0, 65) + '…</div>';
         }
-        cell.addEventListener('click',(function(d2,data2){return function(){openModal(data2,d2);};})(dt,data));
+
+        cell.addEventListener('click', (function(d2, data2){ return function(){ openModal(data2, d2); }; })(dt, data));
       }
       grid.appendChild(cell);
     }
 
-    /* Trailing blanks */
-    var total_cells=offset+lastDay.getDate();
-    var trailing=(7-(total_cells%7))%7;
-    for(var i=0;i<trailing;i++){
-      var blank=document.createElement('div');
-      blank.className='day-cell empty';
+    // Trailing blanks
+    const total_cells = offset + lastDay.getDate();
+    const trailing = (7 - (total_cells % 7)) % 7;
+    for(let i = 0; i < trailing; i++){
+      const blank = document.createElement('div');
+      blank.className = 'day-cell empty';
       grid.appendChild(blank);
     }
 
     blk.appendChild(grid);
     cont.appendChild(blk);
   }
+
   updateProgress();
 }
 
-function openModal(data,dt){
-  document.getElementById('mMeta').textContent=DNF[data.dow]+', '+MN[dt.getMonth()]+' '+dt.getDate()+', 2026  ·  Week '+data.week+'  ·  Day '+dayNum(dt)+' of '+TOTAL;
-  document.getElementById('mTitle').textContent=data.type.label;
-  document.getElementById('mBadge').innerHTML='<div class="modal-type" style="background:'+data.type.bg+';color:'+data.type.color+'">'+data.type.icon+' '+data.type.label+' · '+data.phase.label+'</div>';
-  document.getElementById('mStripe').style.background='linear-gradient(90deg,'+data.phase.color+','+data.type.color+')';
-  document.getElementById('mTasks').innerHTML=data.detail.map(function(t){return '<div class="modal-task"><span class="modal-task-ic">'+t.substring(0,2)+'</span><span>'+t.substring(2)+'</span></div>';}).join('');
-  document.getElementById('mTip').innerHTML='<strong>Coach\'s tip</strong>'+data.tip;
+function openModal(data, dt){
+  document.getElementById('mMeta').textContent =
+    DNF[data.dow] + ', ' + MN[dt.getMonth()] + ' ' + dt.getDate() + ', 2026  ·  Week ' + data.week + '  ·  Day ' + dayNum(dt) + ' of ' + TOTAL;
+  document.getElementById('mTitle').textContent = data.type.label;
+  document.getElementById('mBadge').innerHTML =
+    '<div class="modal-type" style="background:'+data.type.bg+';color:'+data.type.color+'">' +
+    data.type.icon + ' ' + data.type.label + ' · ' + data.phase.label + '</div>';
+  document.getElementById('mStripe').style.background =
+    'linear-gradient(90deg,' + data.phase.color + ',' + data.type.color + ')';
+
+  document.getElementById('mTasks').innerHTML = data.detail.map(t => {
+    const ic = t.substring(0, 2);
+    const txt = t.substring(2).replace(/\n/g, '<br>');
+    return '<div class="modal-task"><span class="modal-task-ic">'+ic+'</span><span class="modal-task-text">'+txt+'</span></div>';
+  }).join('');
+
+  document.getElementById('mTip').innerHTML = '<strong>Coach\'s Tip</strong>' + data.tip;
   document.getElementById('modalOverlay').classList.add('open');
-}
-function closeModalOvl(e){if(e.target===document.getElementById('modalOverlay'))closeModal();}
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
-function filterPhase(phase,el){
-  document.querySelectorAll('.phase-pill').forEach(function(p){p.classList.remove('active');});
-  el.classList.add('active');
-  renderCalendar(phase);
-}
-function scrollToToday(){
-  var el=document.getElementById('today-cell');
-  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  // Prevent body scroll when modal open
+  document.body.style.overflow = 'hidden';
 }
 
+function closeModalOvl(e){
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+function filterPhase(phase, el){
+  document.querySelectorAll('.phase-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  renderCalendar(phase);
+  // After re-render, scroll to today
+  setTimeout(scrollToToday, 100);
+}
+
+function scrollToToday(){
+  const el = document.getElementById('today-cell');
+  if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+}
+
+// Init
 renderCalendar('all');
-setTimeout(scrollToToday,300);
+setTimeout(scrollToToday, 400);
 </script>
 </body>
 </html>
